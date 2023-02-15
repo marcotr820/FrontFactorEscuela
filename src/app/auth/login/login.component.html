@@ -5,16 +5,16 @@
    <br><br>
 
    <form [formGroup]="loginForm" (ngSubmit)="login()">
-      <div>
-         <label for="">Usuario</label>
-         <input type="text" formControlName="userName" required>
+      <div class="field">
+         <label for="userName">Usuario</label>
+         <input type="text" id="userName" pInputText [style]="{ width: '100%' }"  formControlName="userName" required>
          <span *ngIf="campoNoValido('userName')">el Usuario es obligatorio.</span>
       </div>
-      <div>
+      <div class="field">
          <label for="">Password</label>
-         <input type="text" formControlName="password" required>
+         <input type="text" pInputText [style]="{ width: '100%' }" formControlName="password" required>
          <span *ngIf="campoNoValido('password')">el Password es obligatorio.</span>
-      </div><br>
-      <button type="submit">Login</button>
+      </div>
+      <button pButton type="submit" label="Login"></button>
    </form>
 </div>

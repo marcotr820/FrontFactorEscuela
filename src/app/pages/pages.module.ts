@@ -4,8 +4,10 @@ import { PagesComponent } from './pages.component';
 import { IndexComponent } from './index/index.component';
 import { RouterModule } from '@angular/router';
 import { UsuarioComponent } from './usuario/usuario.component';
-
-
+import { SharedModule } from '../shared/shared.module';
+import { PrimeNgModule } from '../prime-ng/prime-ng.module';
+//animaciones tabla
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,10 @@ import { UsuarioComponent } from './usuario/usuario.component';
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    SharedModule,
+    PrimeNgModule,
+    BrowserAnimationsModule
   ],
   exports: [
     PagesComponent,

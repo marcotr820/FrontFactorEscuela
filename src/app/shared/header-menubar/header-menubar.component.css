@@ -1,0 +1,20 @@
+.topbar {
+   background-color: #E8EDEA;
+   height: 50px;
+   display: flex;
+   align-items: center;
+   width: 100%;
+}
+
+.myStyle.p-menubar {
+   background: #E8EDEA;
+   border-radius: 0;
+   height: 50px;
+   flex-direction: row-reverse;
+   padding: 0 40px;
+}
+
+.p-menubar .p-element .p-menubar-root-list .p-menuitem .p-menuitem-link:hover{
+   background-color: #A3B7AB;
+   transition: 0.4s;
+}
