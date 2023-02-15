@@ -1,0 +1,21 @@
+<h1>Lista de usuarios</h1>
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>Usuario</th>
+      <th>rol</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let usuario of usuarios">
+      <td>{{ usuario.userName }}</td>
+      <td>{{ usuario.rol }}</td>
+      <td>
+        <button>Editar</button>
+        <button>Eliminar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

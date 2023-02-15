@@ -1,0 +1,29 @@
+<div class="content">
+   <h1>Registrarse</h1>
+   <a routerLink="/login">Volver atras</a>
+   <br>
+   <form [formGroup]="registroForm" (ngSubmit)="registrarUsuario()">
+      <div>
+         <label for="">Usuario</label>
+         <input type="text" formControlName="userName" required>
+         <span *ngIf="campoNoValido('userName')">El usuario es obligatorio.</span>
+      </div>
+      <div>
+         <label for="">Email</label>
+         <input type="text" formControlName="email" required>
+         <span *ngIf="campoNoValido('email')">El email es obligatorio.</span>
+      </div>
+      <div>
+         <label for="">Password</label>
+         <input type="text" formControlName="password" required>
+         <span *ngIf="campoNoValido('password')">El password es obligatorio.</span>
+      </div>
+      <div>
+         <label for="">Confirmar</label>
+         <input type="text" formControlName="password2" required>
+         <!-- <span *ngIf="campoNoValido('password2')">Confirmar password es obligatorio.</span> -->
+         <p *ngIf="passwordNoConinciden()">los passwords no coinciden.</p>
+      </div><br>
+      <button type="submit">Registrarse</button>
+   </form>
+</div>
