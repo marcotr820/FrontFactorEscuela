@@ -23,10 +23,10 @@ export class RegistroComponent {
 
    constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) { }
 
-   registrarUsuario(){
+   registroNormal(){
       this.formSubmitted = true;
       if (this.registroForm.invalid) { return; }
-      this.authService.registrarService(this.registroForm.value).subscribe({
+      this.authService.registroNormalService(this.registroForm.value).subscribe({
          next: (resp) => {
             this.router.navigate(["/index"]);
          },

@@ -1,9 +1,44 @@
 <div class="content">
-   <h1>Registrarse</h1>
-   <a routerLink="/login">Volver atras</a>
-   <br>
-   <form [formGroup]="registroForm" (ngSubmit)="registrarUsuario()">
-      <div>
+   <form [formGroup]="registroForm" (ngSubmit)="registroNormal()">
+      <p-card header="Registrarme" subheader="vida salud" [style]="{width: '370px', marginTop:'50px'}"
+         styleClass="p-card-shadow">
+
+         <ng-template pTemplate="header">
+            <img alt="Card" src="https://primefaces.org/cdn/primeng/images/usercard.png">
+         </ng-template>
+
+         <div class="field">
+            <label for="">Usuario</label>
+            <input type="text" pInputText class="p-inputtext-sm" [style]="{ width: '100%' }" formControlName="userName" required>
+            <span *ngIf="campoNoValido('userName')">El usuario es obligatorio.</span>
+         </div>
+         <div class="field">
+            <label for="">Email</label>
+            <input type="text" pInputText [style]="{ width: '100%' }" class="p-inputtext-sm" formControlName="email" required>
+            <span *ngIf="campoNoValido('email')">El email es obligatorio.</span>
+         </div>
+         <div class="field">
+            <label for="">Password</label>
+            <input type="text" pInputText [style]="{ width: '100%' }" class="p-inputtext-sm" formControlName="password" required>
+            <span *ngIf="campoNoValido('password')">El password es obligatorio.</span>
+         </div>
+         <div class="field">
+            <label for="">Confirmar</label>
+            <input type="text" pInputText [style]="{ width: '100%' }" class="p-inputtext-sm" formControlName="password2" required>
+            <!-- <span *ngIf="campoNoValido('password2')">Confirmar password es obligatorio.</span> -->
+            <p *ngIf="passwordNoConinciden()">los passwords no coinciden.</p>
+         </div>
+
+         <div class="flex justify-content-between">
+            <p-button routerLink="/login" label="Atras" styleClass="p-button-link"></p-button>
+            <button type="submit" pButton label="Registrarme"></button>
+         </div>
+
+      </p-card>
+
+
+
+      <!-- <div>
          <label for="">Usuario</label>
          <input type="text" formControlName="userName" required>
          <span *ngIf="campoNoValido('userName')">El usuario es obligatorio.</span>
@@ -21,9 +56,9 @@
       <div>
          <label for="">Confirmar</label>
          <input type="text" formControlName="password2" required>
-         <!-- <span *ngIf="campoNoValido('password2')">Confirmar password es obligatorio.</span> -->
          <p *ngIf="passwordNoConinciden()">los passwords no coinciden.</p>
-      </div><br>
-      <button type="submit">Registrarse</button>
+      </div>
+      <button type="submit">Registrarse</button> -->
+      
    </form>
 </div>

@@ -5,6 +5,9 @@ import {InputTextModule} from 'primeng/inputtext';
 import {MenubarModule} from 'primeng/menubar';
 import {TableModule} from 'primeng/table';
 import {DialogModule} from 'primeng/dialog';
+import {CardModule} from 'primeng/card';
+import {DropdownModule} from 'primeng/dropdown';
+import {PasswordModule} from 'primeng/password';
 
 @NgModule({
   declarations: [],
@@ -14,7 +17,10 @@ import {DialogModule} from 'primeng/dialog';
     InputTextModule,
     MenubarModule,
     TableModule,
-    DialogModule
+    DialogModule,
+    CardModule,
+    DropdownModule,
+    PasswordModule
   ]
 })
 export class PrimeNgModule { }

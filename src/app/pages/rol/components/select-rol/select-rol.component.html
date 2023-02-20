@@ -1,0 +1,19 @@
+<form [formGroup]="formRol">
+  <p-dropdown
+    [options]="roles"
+    optionLabel="name"
+    filterBy="name"
+    placeholder="Select a Rol"
+    formControlName="rol"
+    field="name"
+    styleClass="w-full">
+
+    <ng-template let-rol pTemplate="item">
+      <div class="rol-item">
+        <div>{{ rol.name }}</div>
+      </div>
+    </ng-template>
+  </p-dropdown>
+</form>
+
+<!-- {{ formRol.value | json}} -->

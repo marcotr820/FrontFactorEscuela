@@ -1,9 +1,15 @@
 
+<!-- cuando el valor de la variable mostrar modal cambia se emite el evento al componente hijo -->
+<app-crear-editar-usuario
+   [mostrarModalInput]="mostrarModal"
+   (mostrarModalOutput)="recibirMostrarModal($event)">
+</app-crear-editar-usuario>
+
 <p-table [value]="usuarios"
          [loading]="isLoading"
-         [rows]="5"
+         [rows]="10"
          [paginator]="true"
-         [rowsPerPageOptions]="[5, 10]"
+         [rowsPerPageOptions]="[10, 20]"
          [tableStyle]="{'min-width': '100rem'}"
          [filterDelay]="0"
          [rowHover]="true"
@@ -16,18 +22,19 @@
          <div>
             <span class="p-input-icon-left">
                <i class="pi pi-search"></i>
-               <input pInputText type="text" placeholder="buscar..." />
+               <input pInputText type="text" placeholder="Buscar..." />
             </span>
-            <button pButton label="Crear Nuevo" class="ml-3 mr-1 verde"></button>
+            <button pButton label="Crear Nuevo" (click)="mostrarModalFuncion()" class="ml-3 mr-1"></button>
          </div>
       </div>
    </ng-template>
    <ng-template pTemplate="header">
       <tr>
-         <th pSortableColumn="userName" style="width:25%">UserName <p-sortIcon field="userName"></p-sortIcon></th>
-         <th pSortableColumn="email" style="width:25%">Email <p-sortIcon field="email"></p-sortIcon></th>
-         <th pSortableColumn="rol" style="width:25%">Rol <p-sortIcon field="rol"></p-sortIcon></th>
-         <th style="width:25%">Acciones</th>
+         <th pSortableColumn="userName">UserName <p-sortIcon field="userName"></p-sortIcon></th>
+         <th pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon></th>
+         <th pSortableColumn="rol">Rol <p-sortIcon field="rol"></p-sortIcon></th>
+         <th pSortableColumn="estado">Estado <p-sortIcon field="estado"></p-sortIcon></th>
+         <th style="width:10%">Acciones</th>
       </tr>
    </ng-template>
    <ng-template pTemplate="body" let-usuario>
@@ -36,8 +43,20 @@
          <td>{{usuario.email}}</td>
          <td>{{usuario.rol}}</td>
          <td>
+            <p-dropdown [options]="statuses" placeholder="Seleccione" optionValue="value" [(ngModel)]="usuario.isBlocked"
+                        (onChange)="cambiarEstadoUsuario($event.value, usuario)" appendTo="body">
+               <ng-template let-item pTemplate="selectedItem">
+                  <span [class]="'product-badge status-' + item.value">{{item.label}}</span>
+               </ng-template>
+               <ng-template let-option pTemplate="item">
+                  <span [class]="'product-badge status-' + option.value">{{option.label}}</span>
+               </ng-template>
+           </p-dropdown>
+         </td>
+         <td>
             <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded verde"></button>
-            <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger ml-1"></button>
+            <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger ml-1"
+                     (click)="eliminar(usuario.id)"></button>
          </td>
       </tr>
    </ng-template>

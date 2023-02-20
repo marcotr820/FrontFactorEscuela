@@ -13,7 +13,7 @@ export class HeaderMenubarComponent implements OnInit {
 
   ngOnInit(): void {
     this.items = [
-      {label: 'Usuarios', icon: 'pi pi-fw pi-envelope', routerLink: 'usuarios'},
+      {label: 'Usuarios', visible: true, icon: 'pi pi-fw pi-envelope', routerLink: 'usuarios'},
       {label: 'Roles', icon: 'pi pi-fw pi-unlock', routerLink: 'roles'},
       {label: 'Iniciar Sesion', icon: 'pi pi-fw pi-user', routerLink: 'login'},
       {label: 'Soporte', icon: 'pi pi-fw pi-envelope'},

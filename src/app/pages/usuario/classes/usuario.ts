@@ -3,4 +3,5 @@ export class Usuario {
   "userName": string = '';
   "email": string = '';
   "rol": string = '';
+  'isBlocked': boolean;
 }

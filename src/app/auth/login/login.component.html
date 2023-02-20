@@ -1,20 +1,40 @@
 <div class="content">
-   <h1>Login Usuario</h1>
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <p-card header="Iniciar Sesion" 
+            subheader="vida salud" 
+            [style]="{width: '370px', marginTop:'50px'}" 
+            styleClass="p-card-shadow">
 
-   <a routerLink="/registro">Registrarse</a>
-   <br><br>
+      <ng-template pTemplate="header">
+        <img alt="Card" src="https://primefaces.org/cdn/primeng/images/usercard.png">
+      </ng-template>
 
-   <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <!-- <ng-template pTemplate="content">
+        <a href="">asdasd</a>
+      </ng-template> -->
+
       <div class="field">
-         <label for="userName">Usuario</label>
-         <input type="text" id="userName" pInputText [style]="{ width: '100%' }"  formControlName="userName" required>
-         <span *ngIf="campoNoValido('userName')">el Usuario es obligatorio.</span>
+        <label>Usuario</label>
+        <input type="text" id="userName" class="p-inputtext-sm" pInputText [style]="{ width: '100%' }" formControlName="userName" required>
+        <span *ngIf="campoNoValido('userName')">el Usuario es obligatorio.</span>
       </div>
       <div class="field">
-         <label for="">Password</label>
-         <input type="text" pInputText [style]="{ width: '100%' }" formControlName="password" required>
-         <span *ngIf="campoNoValido('password')">el Password es obligatorio.</span>
+        <label>Password</label>
+        <p-password type="password" class="p-inputtext-sm" [toggleMask]="true" [feedback]="false" styleClass="w-full"
+                    formControlName="password" required inputStyleClass="w-full"></p-password>
+        <!-- <input type="password" pPassword class="p-inputtext-sm" [style]="{ width: '100%' }" 
+              [toggleMask]="true" formControlName="password" required> -->
+        <span *ngIf="campoNoValido('password')">el Password es obligatorio.</span>
       </div>
-      <button pButton type="submit" label="Login"></button>
-   </form>
+
+      <div class="flex justify-content-between">
+        <button pButton label="Iniciar Sesion"></button>
+        <p-button routerLink="/registro" label="Registrarse" styleClass="p-button-link"></p-button>
+      </div>
+      
+    </p-card>
+
+  </form>
 </div>
+
+  

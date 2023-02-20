@@ -1,0 +1,16 @@
+.status-false {
+    background-color: #C8E6C9;
+    color: #256029;
+}
+
+.status-true {
+    background-color: pink;
+    color: red;
+}
+
+.product-badge {
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-weight: 600;
+    letter-spacing: .3px;
+}

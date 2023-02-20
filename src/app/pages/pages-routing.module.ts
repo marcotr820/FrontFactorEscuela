@@ -4,6 +4,7 @@ import { IndexComponent } from './index/index.component';
 import { PagesComponent } from './pages.component';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { UsuarioComponent } from './usuario/usuario.component';
+import { RolComponent } from './rol/rol.component';
 
 const rutasHijas: Routes = [
   {
@@ -12,7 +13,8 @@ const rutasHijas: Routes = [
     canActivate: [AuthGuard],
     children: [
       { path: '', component: IndexComponent },
-      { path: 'usuarios', component: UsuarioComponent}
+      { path: 'usuarios', component: UsuarioComponent},
+      { path: 'roles', component: RolComponent},
     ]
   },
 ];
