@@ -3,6 +3,7 @@ import { RolService } from '../../../rol/services/rol.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Rol } from 'src/app/pages/rol/classes/rol';
 import { UsuarioService } from '../../services/usuario.service';
+import { RegistroAutorizado } from '../../classes/registroAutorizado';
 
 @Component({
    selector: 'app-crear-editar-usuario',
@@ -19,7 +20,7 @@ export class CrearEditarUsuarioComponent {
    }
    @Output() mostrarModalOutput: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-   formRegistroAutorizado: FormGroup = this.fb.group({
+   public formRegistroAutorizado: FormGroup = this.fb.group({
       userName: ['luis123', Validators.required],
       email: ['luis@gmail.com', Validators.required],
       password: ['Admin123*', Validators.required],
@@ -36,8 +37,7 @@ export class CrearEditarUsuarioComponent {
          this.formRegistroAutorizado.markAllAsTouched();
          return;
       }
-      console.log(this.formRegistroAutorizado.value);
-      let usuario = this.formRegistroAutorizado.value;
+      let usuario: RegistroAutorizado = this.formRegistroAutorizado.value;
       this.usuarioService.registroUsuarioService(usuario).subscribe({
          next: (resp) => {
             console.log(resp);
@@ -61,7 +61,8 @@ export class CrearEditarUsuarioComponent {
    }
 
    campoEsValido(campo: string): boolean {
-      if (this.formRegistroAutorizado.get(campo)?.invalid && this.formRegistroAutorizado.controls[campo].touched) {
+      if (this.formRegistroAutorizado.get(campo)?.invalid 
+         && this.formRegistroAutorizado.controls[campo].touched) {
          return true;
       }
       return false;

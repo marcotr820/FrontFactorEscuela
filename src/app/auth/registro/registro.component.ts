@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { RegistroNormal } from './classes/registroNormal';
 
 @Component({
    selector: 'app-registro',
@@ -12,7 +13,7 @@ export class RegistroComponent {
 
    public formSubmitted = false;
 
-   public registroForm = this.fb.group({
+   public registroForm: FormGroup = this.fb.group({
       userName: ['', Validators.required],
       email: ['', Validators.required],
       password: ['', Validators.required],
@@ -26,7 +27,8 @@ export class RegistroComponent {
    registroNormal(){
       this.formSubmitted = true;
       if (this.registroForm.invalid) { return; }
-      this.authService.registroNormalService(this.registroForm.value).subscribe({
+      let registroUsuario: RegistroNormal = this.registroForm.value;
+      this.authService.registroNormalService(registroUsuario).subscribe({
          next: (resp) => {
             this.router.navigate(["/index"]);
          },

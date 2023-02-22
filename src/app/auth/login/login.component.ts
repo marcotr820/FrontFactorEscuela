@@ -1,8 +1,8 @@
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import { LoginUsuarioDto } from '../classes/loginUsuarioDto';
+import { LoginUsuario } from '../classes/loginUsuario';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
 
   public formSubmitted = false;
 
-  loginForm = this.fb.group({
+  loginForm:FormGroup = this.fb.group({
     userName: ["superadmin", [Validators.required, Validators.minLength(1)]],
     password: ["Admin123*", [Validators.required, Validators.minLength(1)]]
   });
@@ -27,11 +27,8 @@ export class LoginComponent implements OnInit {
   login() {
     this.formSubmitted = true;
     if (this.loginForm.invalid) { return; }
-    let loginInfo: LoginUsuarioDto = {
-      userName: this.loginForm.controls['userName'].value!,
-      password: this.loginForm.controls['password'].value!,
-    };
-    this.authService.loginService(loginInfo).subscribe({
+    let loginUsuario: LoginUsuario = this.loginForm.value;
+    this.authService.loginService(loginUsuario).subscribe({
       next: (resp) => {
         if (resp.dataResult.isBlocked) {
           console.log(resp);

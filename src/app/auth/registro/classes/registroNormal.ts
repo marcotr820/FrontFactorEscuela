@@ -1,6 +1,6 @@
 
 export class RegistroNormal {
-    'id': string = '';
-    'userName': string = '';
-    'password': string = '';
+    userName: string = '';
+    email: string = '';
+    password: string = '';
 }

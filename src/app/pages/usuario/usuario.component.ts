@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Usuario } from './classes/usuario';
 import { UsuarioService } from './services/usuario.service';
+import { Resultado } from '../../shared/classes/respuesta';
 
 @Component({
   selector: 'app-usuario',
@@ -28,8 +29,8 @@ export class UsuarioComponent implements OnInit {
     this.isLoading = true;
     setTimeout(() => {
       this.usuarioService.GetAllService().subscribe({
-        next: (resp: Usuario[]) => {
-          this.usuarios = resp;
+        next: (resp) => {
+          this.usuarios = resp.dataResult;
           this.isLoading = false;
         }
       });
@@ -48,9 +49,8 @@ export class UsuarioComponent implements OnInit {
     }
   }
 
-  cambiarEstadoUsuario(event: Event, usuario: Usuario){
-    // console.log(event, usuario);
-    this.usuarioService.bloquearDesbloquearUsuarioService(usuario).subscribe({
+  cambiarEstadoUsuario(usuarioId: string){
+    this.usuarioService.bloquearDesbloquearUsuarioService(usuarioId).subscribe({
       next: () => {
         this.GetAll();
       }
