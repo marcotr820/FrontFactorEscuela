@@ -1,0 +1,14 @@
+<p-dialog header="Cuenta Bloqueada" [(visible)]="modalVisible" [modal]="true" [style]="{width: '35vw'}"
+    [closable]="false" [closeOnEscape]="false" [draggable]="false" [resizable]="false">
+    
+    <div>
+        Hola <strong>{{ authService.getUsuarioBloqueado.name }} {{ authService.getUsuarioBloqueado.email }}</strong>,
+        tu cuenta ha sido bloqueada sit amet consectetur adipisicing elit. Magni, dolores qui, harum excepturi
+        <a href="">Mas información</a>
+        eveniet provident id adipisci nihil asperiores por favor contactate con soporte.
+    </div>
+
+        <ng-template pTemplate="footer">
+            <button pButton (click)="ocultarModal()" label="Aceptar" styleClass="p-button-text"></button>
+        </ng-template>
+</p-dialog>

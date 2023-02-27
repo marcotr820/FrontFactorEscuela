@@ -8,6 +8,9 @@ import {DialogModule} from 'primeng/dialog';
 import {CardModule} from 'primeng/card';
 import {DropdownModule} from 'primeng/dropdown';
 import {PasswordModule} from 'primeng/password';
+import {MessagesModule} from 'primeng/messages';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ToastModule} from 'primeng/toast';
 
 @NgModule({
   declarations: [],
@@ -20,7 +23,10 @@ import {PasswordModule} from 'primeng/password';
     DialogModule,
     CardModule,
     DropdownModule,
-    PasswordModule
+    PasswordModule,
+    MessagesModule,
+    ConfirmDialogModule,
+    ToastModule
   ]
 })
 export class PrimeNgModule { }

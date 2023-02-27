@@ -1,0 +1,15 @@
+<p-card header="Cambia tu Contraseña" [style]="{'width': '500px'}">
+   <form action="" (ngSubmit)="cambiarPassword()">
+      <div class="field">
+         <label for="username1" class="block">Contraseña Actual</label>
+         <p-password type="password" [toggleMask]="true" [feedback]="false" styleClass="w-full"
+                    required inputStyleClass="w-full"></p-password>
+      </div>
+      <div class="field">
+         <label for="username1" class="block">Nueva Contraseña</label>
+         <p-password type="password" [toggleMask]="true" [feedback]="false" styleClass="w-full"
+                    required inputStyleClass="w-full"></p-password>
+      </div>
+      <button type="submit" pButton label="Guardar Cambios"></button>
+   </form>
+</p-card>

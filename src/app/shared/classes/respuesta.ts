@@ -1,4 +1,4 @@
-export class Resultado<T> {
+export class  Respuesta<T> {
     'dataResult': T;
     'error': string = '';
 }

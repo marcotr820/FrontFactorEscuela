@@ -1,0 +1,31 @@
+<p-dialog header="Registrar Rol" 
+          [(visible)]="mostrarModal" [modal]="true" [style]="{width: '450px'}"
+          [draggable]="false" [closeOnEscape]="false" [resizable]="false" [closable]="false"
+          [contentStyle]="{paddingBottom:'7px', paddingTop:'5px'}">
+  <form autocomplete="off" [formGroup]="formRol" (ngSubmit)="registrarRol($event)">
+    <!-- formulario principal -->
+    <div class="card">
+      <div class="grid">
+        <div class="col">
+          <div class="formgrid">
+            <div class="field">
+              <label>Nombre Rol</label>
+              <input type="text" formControlName="name" pInputText [style]="{ 'width': '100%', 'text-transform': 'uppercase' }"
+                    [ngClass]="{'ng-invalid ng-dirty': campoEsValido('name')}"/>
+              <small *ngIf="campoEsValido('name')" class="p-error block">El nombre del Rol es obligatorio.</small>
+            </div>
+          </div>
+          <!-- {{ formRegistroAutorizado.value | json}} -->
+          <div class="card">
+            <div class="flex justify-content-end align-items-center">
+              <button type="button" pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text"
+                (click)="cancelarModal()"></button>
+              <button pButton type="submit" pRipple label="Guardar" icon="pi pi-check" class="p-button-text ml-2"></button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </form>
+</p-dialog>

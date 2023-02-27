@@ -6,6 +6,8 @@ import { AuthGuard } from '../auth/guards/auth.guard';
 import { UsuarioComponent } from './usuario/usuario.component';
 import { RolComponent } from './rol/rol.component';
 import { TieneRolGuard } from '../auth/guards/tiene-rol.guard';
+import { CuentaComponent } from './cuenta/cuenta.component';
+import { CS } from '../shared/classes/CS';
 
 const rutasHijas: Routes = [
   {
@@ -14,9 +16,10 @@ const rutasHijas: Routes = [
     canActivate: [AuthGuard],
     children: [
       { path: '', component: IndexComponent },
+      { path: 'cuenta', component: CuentaComponent },
       { path: 'usuarios', component: UsuarioComponent, canActivate: [TieneRolGuard],
         data: {
-          role: 'SUPERADMIN',
+          rolesPermitidos: [CS.SUPERADMIN, CS.ADMIN],
         }
       },
       { path: 'roles', component: RolComponent},

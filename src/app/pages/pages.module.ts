@@ -8,19 +8,25 @@ import { SharedModule } from '../shared/shared.module';
 import { PrimeNgModule } from '../prime-ng/prime-ng.module';
 //animaciones tabla
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CrearEditarUsuarioComponent } from './usuario/components/crear-editar-usuario/crear-editar-usuario.component';
 import { RolComponent } from './rol/rol.component';
 import { SelectRolComponent } from './rol/components/select-rol/select-rol.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CuentaComponent } from './cuenta/cuenta.component';
+import { CrearEditarRolComponent } from './rol/components/crear-editar-rol/crear-editar-rol.component';
+import { CrearUsuarioComponent } from './usuario/components/crear-usuario/crear-usuario.component';
+import { EditarUsuarioComponent } from './usuario/components/editar-usuario/editar-usuario.component';
 
 @NgModule({
   declarations: [
     PagesComponent,
     IndexComponent,
     UsuarioComponent,
-    CrearEditarUsuarioComponent,
+    CrearUsuarioComponent,
     RolComponent,
-    SelectRolComponent
+    SelectRolComponent,
+    CuentaComponent,
+    CrearEditarRolComponent,
+    EditarUsuarioComponent
   ],
   imports: [
     CommonModule,
@@ -28,7 +34,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SharedModule,
     PrimeNgModule,
     BrowserAnimationsModule,
-    FormsModule,  //importamos formsmodule para el uso del ngmodel en el select de la tabla
+    FormsModule,  //importamos formsModule para el uso del ngmodel en el select de la tabla
     ReactiveFormsModule
   ],
   exports: [

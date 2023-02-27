@@ -10,11 +10,13 @@ import { Rol } from '../../classes/rol';
 })
 export class SelectRolComponent implements OnInit {
 
-  private rolIdSeleccionadoInput: string = ''; 
+  private rolSeleccionadoInput: string = ''; 
   roles: Rol[] = [];
-  @Input() set rolInput(rolIdRecibido: string) {
-    if (rolIdRecibido && rolIdRecibido != "") {
-      this.rolIdSeleccionadoInput = rolIdRecibido;
+
+  @Input() set rolInput(rolRecibido: string) {
+    if (!!rolRecibido) {
+      console.log(rolRecibido, 'asd');
+      this.rolSeleccionadoInput = rolRecibido;
       this.cambiarRol();
     }
   }
@@ -37,7 +39,7 @@ export class SelectRolComponent implements OnInit {
   }
 
   cambiarRol(): void{
-    let rol = this.roles.find( rol => rol.id == this.rolIdSeleccionadoInput);
+    let rol = this.roles.find( rol => rol.name == this.rolSeleccionadoInput);
     if(rol){
       this.formRol.reset({ 
         rol: rol, 

@@ -1,8 +1,15 @@
 .content {
    display: flex;
-   margin: 82px auto 32px;
-   padding: 0 16px;
-   max-width: 960px;
+   justify-content: center;
+   margin-top: 10vh;
    flex-direction: column;
    align-items: center;
+}
+
+/* style p-message */
+.p-messages .p-message-wrapper .p-message-icon{
+   display: none;
+}
+.p-messages .p-message-wrapper {
+   padding: 5px;
 }

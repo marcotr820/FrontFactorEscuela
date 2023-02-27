@@ -1,12 +1,13 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { Resultado } from '../../shared/classes/respuesta';
-import { dataResult } from '../../shared/classes/dataResult';
+import { Respuesta } from '../../shared/classes/respuesta';
+import { DataResult } from '../../shared/classes/dataResult';
 import { LoginUsuario } from '../classes/loginUsuario';
 import { RegistroNormal } from '../registro/classes/registroNormal';
 import { TokenModelo } from '../../shared/classes/tokenModelo';
+import { UsuarioBloqueado } from '../login/classes/usuario-bloqueado';
 
 @Injectable({
   providedIn: 'root'
@@ -15,21 +16,26 @@ export class AuthService {
   private baseUrl:string = environment.baseUrl;
   private _isLoggedIn = new BehaviorSubject<boolean>(false);
   public _tokenDatos!: TokenModelo;
-
-  get isLoggedIn$() : boolean{
-    if (this._isLoggedIn) { return true }
-    return false;
-  }
-
-  get token(): string {
-    return localStorage.getItem('token') || ''; //si no existe el token toma valor '';
-  }
+  private usuarioBloqueado = new UsuarioBloqueado();
 
   constructor(private http: HttpClient) {
     this._isLoggedIn.next(!!this.token); //!! cambia el valor a bool
     this._tokenDatos = this.getTokenDatos(this.token);
   }
 
+  get isLoggedIn$() : boolean{
+    if (this._isLoggedIn) { return true }
+    return false;
+  }
+
+  get getUsuarioBloqueado(): UsuarioBloqueado{
+    return this.usuarioBloqueado;
+  }
+
+  get token(): string {
+    return localStorage.getItem('token') || ''; //si no existe el token toma valor '';
+  }
+  
   private getTokenDatos(tokenRecibido: string){
     if(!!tokenRecibido){
       return JSON.parse(window.atob(tokenRecibido.split('.')[1]));
@@ -38,20 +44,24 @@ export class AuthService {
   }
 
   loginService(loginUsuario: LoginUsuario) {
-    return this.http.post<Resultado<dataResult>>(`${this.baseUrl}/cuentas/login`, loginUsuario)
+    return this.http.post<Respuesta<DataResult>>(`${this.baseUrl}/cuentas/login`, loginUsuario)
       .pipe(
-        tap((resp: Resultado<dataResult>) => {
-          if (!resp.dataResult.isBlocked) {
+        tap((resp: Respuesta<DataResult>) => {
+          if(resp.dataResult.isBlocked){
+            const {name, email, exp} = JSON.parse(window.atob(resp.dataResult.token.split('.')[1]));
+            this.usuarioBloqueado = new UsuarioBloqueado(name, email, exp);
+          }
+          if(!resp.error && !resp.dataResult.isBlocked){
             localStorage.setItem("token", resp.dataResult.token);
           }
-        })
+        }),
       );
   }
 
-  registroNormalService(registroNormal: RegistroNormal) {
-    return this.http.post<Resultado<dataResult>>(`${this.baseUrl}/cuentas/RegistroNormal`, registroNormal)
+  crearUsuarioNormalService(registroNormal: RegistroNormal) {
+    return this.http.post<Respuesta<DataResult>>(`${this.baseUrl}/cuentas/CrearUsuarioNormal`, registroNormal)
       .pipe(
-        tap((resp: Resultado<dataResult>) => {
+        tap((resp: Respuesta<DataResult>) => {
           if (!resp.dataResult.isBlocked) {
             localStorage.setItem("token", resp.dataResult.token);
           }
@@ -67,8 +77,8 @@ export class AuthService {
     //     "Authorization": `Bearer ${token}`  //enviamos el valor del token
     //   }
     // }
-    return this.http.get<Resultado<dataResult>>(`${this.baseUrl}/cuentas/renovarToken`).pipe(
-      tap((resp: Resultado<dataResult>) => {   //tap realiza operaciones con la respuesta
+    return this.http.get<Respuesta<DataResult>>(`${this.baseUrl}/cuentas/renovarToken`).pipe(
+      tap((resp: Respuesta<DataResult>) => {   //tap realiza operaciones con la respuesta
         localStorage.setItem("token", resp.dataResult.token);
         this._isLoggedIn.next(true);
         this._tokenDatos = this.getTokenDatos(resp.dataResult.token);

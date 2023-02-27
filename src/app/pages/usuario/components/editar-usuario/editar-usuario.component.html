@@ -1,0 +1,47 @@
+
+<p-dialog header="Editar Usuario" 
+          [(visible)]="modalVisible" [modal]="true" [style]="{width: '450px'}"
+          [draggable]="false" [closeOnEscape]="false" [resizable]="false" [closable]="false"
+          [contentStyle]="{paddingBottom:'7px', paddingTop:'5px'}">
+  <form autocomplete="off" [formGroup]="formEditarUsuario" (ngSubmit)="editarUsuario($event)">
+    <!-- formulario principal -->
+    <div class="card">
+      <div class="grid">
+        <div class="col">
+          <div class="formgrid">
+            <div class="field">
+              <label>Usuario</label>
+              <input type="text" formControlName="userName" pInputText [style]="{ width: '100%' }"
+                      [ngClass]="{'ng-invalid ng-dirty': campoEsValido('userName')}"/>
+              <small *ngIf="campoEsValido('userName')" class="p-error block">El usuario es obligatorio.</small>
+            </div>
+            <div class="field">
+              <label>Email</label>
+              <input type="text" formControlName="email" pInputText [style]="{ width: '100%' }"
+                      [ngClass]="{'ng-invalid ng-dirty': campoEsValido('email')}"/>
+              <small *ngIf="campoEsValido('email')" class="p-error block">{{ emailErrorMsj }}</small>
+            </div>
+
+            <div class="field">
+              <label for="inventoryStatus">Rol</label>
+              <app-select-rol
+                [rolInput]="formEditarUsuario.get('rol')?.value"
+                (rolOutput)="recibirRol($event)">
+              </app-select-rol>
+              <small *ngIf="campoEsValido('rolId')" class="p-error block">El rol es obligatorio.</small>
+            </div>
+
+          </div>
+          <div class="card">
+            <div class="flex justify-content-end align-items-center">
+              <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text"
+                (click)="ocultarModal($event)"></button>
+              <button pButton type="submit" pRipple label="Guardar" icon="pi pi-check" class="p-button-text ml-2"></button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </form>
+</p-dialog>

@@ -1,3 +1,8 @@
+
+<app-usuario-bloqueado
+[modalVisibleInput]="modalBloqueoVisible"
+(modalVisibleOutput)="ocultarModalBloqueo($event)"></app-usuario-bloqueado>
+
 <div class="content">
   <form [formGroup]="loginForm" (ngSubmit)="login()">
     <p-card header="Iniciar Sesion" 
@@ -9,26 +14,24 @@
         <img alt="Card" src="https://primefaces.org/cdn/primeng/images/usercard.png">
       </ng-template>
 
-      <!-- <ng-template pTemplate="content">
-        <a href="">asdasd</a>
-      </ng-template> -->
+      <p-messages [(value)]="msjError" [enableService]="false"></p-messages>
 
       <div class="field">
         <label>Usuario</label>
-        <input type="text" id="userName" class="p-inputtext-sm" pInputText [style]="{ width: '100%' }" formControlName="userName" required>
-        <span *ngIf="campoNoValido('userName')">el Usuario es obligatorio.</span>
+        <input type="text" id="userName" pInputText [style]="{ width: '100%' }" 
+              [ngClass]="{'ng-invalid ng-dirty': campoNoValido('userName')}" formControlName="userName" required>
+        <small *ngIf="campoNoValido('userName')" class="p-error block">El usuario es obligatorio.</small>
       </div>
       <div class="field">
         <label>Password</label>
-        <p-password type="password" class="p-inputtext-sm" [toggleMask]="true" [feedback]="false" styleClass="w-full"
-                    formControlName="password" required inputStyleClass="w-full"></p-password>
-        <!-- <input type="password" pPassword class="p-inputtext-sm" [style]="{ width: '100%' }" 
-              [toggleMask]="true" formControlName="password" required> -->
-        <span *ngIf="campoNoValido('password')">el Password es obligatorio.</span>
+        <p-password type="password" [toggleMask]="true" [feedback]="false" styleClass="w-full"
+                    [ngClass]="{'ng-invalid ng-dirty': campoNoValido('password')}" formControlName="password" 
+                    required inputStyleClass="w-full"></p-password>
+        <small *ngIf="campoNoValido('password')" class="p-error block">El password es obligatorio.</small>
       </div>
 
       <div class="flex justify-content-between">
-        <button pButton label="Iniciar Sesion"></button>
+        <button type="submit" pButton label="Iniciar Sesion"></button>
         <p-button routerLink="/registro" label="Registrarse" styleClass="p-button-link"></p-button>
       </div>
       

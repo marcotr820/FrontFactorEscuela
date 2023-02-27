@@ -1,5 +1,5 @@
 <div class="content">
-   <form [formGroup]="registroForm" (ngSubmit)="registroNormal()">
+   <form [formGroup]="registroForm" (ngSubmit)="crearUsuarioNormal()">
       <p-card header="Registrarme" subheader="vida salud" [style]="{width: '370px', marginTop:'50px'}"
          styleClass="p-card-shadow">
 
@@ -9,24 +9,27 @@
 
          <div class="field">
             <label for="">Usuario</label>
-            <input type="text" pInputText class="p-inputtext-sm" [style]="{ width: '100%' }" formControlName="userName" required>
-            <span *ngIf="campoNoValido('userName')">El usuario es obligatorio.</span>
+            <input type="text" pInputText [style]="{ width: '100%' }" formControlName="userName" required
+                  [ngClass]="{'ng-invalid ng-dirty': campoNoValido('userName')}">
+            <small *ngIf="campoNoValido('userName')" class="p-error block">El usuario es obligatorio.</small>
          </div>
          <div class="field">
             <label for="">Email</label>
-            <input type="text" pInputText [style]="{ width: '100%' }" class="p-inputtext-sm" formControlName="email" required>
-            <span *ngIf="campoNoValido('email')">El email es obligatorio.</span>
+            <input type="text" pInputText [style]="{ width: '100%' }" formControlName="email" required
+                  [ngClass]="{'ng-invalid ng-dirty': campoNoValido('email')}">
+            <small *ngIf="campoNoValido('email')" class="p-error block">{{ emailMsjError }}</small>
          </div>
          <div class="field">
             <label for="">Password</label>
-            <input type="text" pInputText [style]="{ width: '100%' }" class="p-inputtext-sm" formControlName="password" required>
-            <span *ngIf="campoNoValido('password')">El password es obligatorio.</span>
+            <input type="text" pInputText [style]="{ width: '100%' }" formControlName="password" required
+                  [ngClass]="{'ng-invalid ng-dirty': campoNoValido('password')}">
+            <small *ngIf="campoNoValido('password')" class="p-error block">El password debe ser mayor a 7 caracteres.</small>
          </div>
          <div class="field">
             <label for="">Confirmar</label>
-            <input type="text" pInputText [style]="{ width: '100%' }" class="p-inputtext-sm" formControlName="password2" required>
-            <!-- <span *ngIf="campoNoValido('password2')">Confirmar password es obligatorio.</span> -->
-            <p *ngIf="passwordNoConinciden()">los passwords no coinciden.</p>
+            <input type="text" pInputText [style]="{ width: '100%' }" formControlName="password2" required
+                  [ngClass]="{'ng-invalid ng-dirty': campoNoValido('password2')}">
+            <small *ngIf="campoNoValido('password2')" class="p-error block">Los password no coinciden.</small>
          </div>
 
          <div class="flex justify-content-between">
@@ -34,31 +37,8 @@
             <button type="submit" pButton label="Registrarme"></button>
          </div>
 
+         {{ registroForm.valid }}
+
       </p-card>
-
-
-
-      <!-- <div>
-         <label for="">Usuario</label>
-         <input type="text" formControlName="userName" required>
-         <span *ngIf="campoNoValido('userName')">El usuario es obligatorio.</span>
-      </div>
-      <div>
-         <label for="">Email</label>
-         <input type="text" formControlName="email" required>
-         <span *ngIf="campoNoValido('email')">El email es obligatorio.</span>
-      </div>
-      <div>
-         <label for="">Password</label>
-         <input type="text" formControlName="password" required>
-         <span *ngIf="campoNoValido('password')">El password es obligatorio.</span>
-      </div>
-      <div>
-         <label for="">Confirmar</label>
-         <input type="text" formControlName="password2" required>
-         <p *ngIf="passwordNoConinciden()">los passwords no coinciden.</p>
-      </div>
-      <button type="submit">Registrarse</button> -->
-      
    </form>
 </div>

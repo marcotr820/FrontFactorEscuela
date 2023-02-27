@@ -3,36 +3,39 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Usuario } from '../classes/usuario';
 import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
-import { Resultado } from 'src/app/shared/classes/respuesta';
+import { Respuesta } from 'src/app/shared/classes/respuesta';
 import { RegistroAutorizado } from '../classes/registroAutorizado';
+import { DataResult } from '../../../shared/classes/dataResult';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioService {
   private baseUrl:string = environment.baseUrl;
-  private token:string = localStorage.getItem("token") || '';
   constructor(private http: HttpClient) { }
 
-  GetAllService(): Observable<Resultado<Usuario[]>>{
-    return this.http.get<Resultado<Usuario[]>>(`${this.baseUrl}/cuentas/GetUsuarios`);
+  GetAllService(): Observable<Respuesta<Usuario[]>>{
+    return this.http.get<Respuesta<Usuario[]>>(`${this.baseUrl}/cuentas/GetUsuarios`);
+  }
+
+  get token(){
+    return localStorage.getItem("token") || '';
   }
   
   get headers() {
     return {
-      headers: {
-        "Authorization": `Bearer ${this.token}`
-      }
+      headers: { "Authorization": `Bearer ${this.token}` }
     }
   }
 
-  registroUsuarioService(usuario: RegistroAutorizado){
-    console.log(usuario);
-    
-    const token = localStorage.getItem("token");
+  crearUsuarioAutorizadoService(usuario: RegistroAutorizado){
     let body = usuario;
-    let headers = {"Authorization": `Bearer ${token}`}
-    return this.http.post(`${this.baseUrl}/cuentas/RegistroAutorizado`, body, { headers });
+    return this.http.post<Respuesta<DataResult>>(`${this.baseUrl}/cuentas/RegistroAutorizado`, body, this.headers);
+  }
+
+  editarUsuarioAutorizadoService(usuario: any){
+    let body = usuario;
+    return this.http.put(`${this.baseUrl}/cuentas/EditarUsuarioAutorizado`, body, this.headers);
   }
 
   bloquearDesbloquearUsuarioService(usuarioId: string){
@@ -42,7 +45,7 @@ export class UsuarioService {
 
   eliminarService(id: string){
     const url = `${this.baseUrl}/cuentas/EliminarUsuario`;
-    const params = new HttpParams().set('usuarioId', id);
+    const params = new HttpParams().set('id', id);
     return this.http.delete(url, {params});
   }
 }

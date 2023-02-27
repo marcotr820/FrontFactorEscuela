@@ -1,9 +1,21 @@
 
 <!-- cuando el valor de la variable mostrar modal cambia se emite el evento al componente hijo -->
-<app-crear-editar-usuario
-   [mostrarModalInput]="mostrarModal"
-   (mostrarModalOutput)="recibirMostrarModal($event)">
-</app-crear-editar-usuario>
+<app-crear-usuario
+   [mostrarModalInput]="modalCrearVisible"
+   (ocultarModalOutput)="ocultarModalCrear($event)">
+</app-crear-usuario>
+
+<app-editar-usuario
+   [usuarioInput]="form.get('usuario')?.value"
+   [mostrarModalInput]="modalEditarVisible"
+   (ocultarModalOutput)="ocultarModalEditar($event)">
+</app-editar-usuario>
+
+<!-- Confirm -->
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+
+<!-- Toast -->
+<p-toast></p-toast>
 
 <p-table [value]="usuarios"
          [loading]="isLoading"
@@ -17,14 +29,14 @@
          [showCurrentPageReport]="true"
          currentPageReportTemplate="Mostrando {first} al {last} de {totalRecords} Registros">
    <ng-template pTemplate="caption">
-      <div class="flex align-items-center justify-content-between">
+      <div class="flex align-items-center flex-wrap justify-content-between">
          <h2 class="m-0">Lista de Usuarios</h2>
-         <div>
+         <div class="flex align-items-center">
             <span class="p-input-icon-left">
                <i class="pi pi-search"></i>
                <input pInputText type="text" placeholder="Buscar..." />
             </span>
-            <button pButton label="Crear Nuevo" (click)="mostrarModalFuncion()" class="ml-3 mr-1"></button>
+            <button pButton label="Crear Nuevo" (click)="mostrarModalCrear()" class="ml-3 mr-1"></button>
          </div>
       </div>
    </ng-template>
@@ -33,7 +45,7 @@
          <th pSortableColumn="userName">UserName <p-sortIcon field="userName"></p-sortIcon></th>
          <th pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon></th>
          <th pSortableColumn="rol">Rol <p-sortIcon field="rol"></p-sortIcon></th>
-         <th pSortableColumn="estado">Estado <p-sortIcon field="estado"></p-sortIcon></th>
+         <th style="width:15%">Estado</th>
          <th style="width:10%">Acciones</th>
       </tr>
    </ng-template>
@@ -54,9 +66,10 @@
            </p-dropdown>
          </td>
          <td>
-            <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded verde"></button>
+            <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded"
+                     (click)="mostrarModalEditar(usuario)"></button>
             <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger ml-1"
-                     (click)="eliminar(usuario.id)"></button>
+                     (click)="confirmarEliminar(usuario.id)"></button>
          </td>
       </tr>
    </ng-template>

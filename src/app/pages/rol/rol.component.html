@@ -1,1 +1,48 @@
-<h1>roles works</h1>
+
+<app-crear-editar-rol
+   [rolValueInput]="form.get('rol')?.value"
+   [mostrarModalInput]="mostrarModal"
+   (modalCanceladoOutput)="modalCanceladoOutput($event)"
+   (ocultarModalDatoCreadoOutput)="ocultarModalDatoCreadoOutput($event)">
+</app-crear-editar-rol>
+
+<!-- Confirm -->
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+
+<!-- Toast -->
+<p-toast></p-toast>
+
+<p-table [value]="roles" [loading]="isLoading" [rows]="10" [paginator]="true"
+   [rowsPerPageOptions]="[10,25,50]"
+   [tableStyle]="{'min-width': '100rem'}" [filterDelay]="0" [rowHover]="true" styleClass="p-datatable-sm"
+   [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} al {last} de {totalRecords} Registros">
+   <ng-template pTemplate="caption">
+      <div class="flex align-items-center flex-wrap justify-content-between">
+         <h2 class="m-0">Lista de Roles</h2>
+         <div class="flex align-items-center">
+            <span class="p-input-icon-left">
+               <i class="pi pi-search"></i>
+               <input pInputText type="text" placeholder="Buscar..." />
+            </span>
+            <button pButton label="Crear Nuevo" (click)="mostrarModalFuncion()" class="ml-3 mr-1"></button>
+         </div>
+      </div>
+   </ng-template>
+   <ng-template pTemplate="header">
+      <tr>
+         <th pSortableColumn="name">Rol <p-sortIcon field="name"></p-sortIcon></th>
+         <th style="width:10%">Acciones</th>
+      </tr>
+   </ng-template>
+   <ng-template pTemplate="body" let-rol>
+      <tr>
+         <td>{{ rol.name }}</td>
+         <td>
+            <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded"
+               (click)="editar(rol)"></button>
+            <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger ml-1"
+               (click)="confirmarEliminar(rol.id)"></button>
+         </td>
+      </tr>
+   </ng-template>
+</p-table>

@@ -8,11 +8,13 @@ import { LoginComponent } from './login/login.component';
 import { RegistroComponent } from './registro/registro.component';
 import { PrimeNgModule } from '../prime-ng/prime-ng.module';
 import { TokenInterceptorService } from './interceptores/token-interceptor.service';
+import { UsuarioBloqueadoComponent } from './login/components/usuario-bloqueado/usuario-bloqueado.component';
 
 @NgModule({
   declarations: [
     LoginComponent,
-    RegistroComponent
+    RegistroComponent,
+    UsuarioBloqueadoComponent
   ],
   imports: [
     CommonModule,

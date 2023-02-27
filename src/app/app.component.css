@@ -1,0 +1,29 @@
+/* START PRIMENG INPUT */
+.p-inputtext {
+   padding: 6px;
+}
+/* END PRIMENG INPUT */
+
+/* START PRIMENG TABLE OPCIONES POR PAGINA */
+/* .p-dropdown-label.p-inputtext{
+   display: flex;
+   align-items: center;
+} */
+/* END PRIMENG TABLE OPCIONES POR PAGINA */
+
+/* START PRIMENG BUTTON */
+.p-button {
+   padding: 6px 10px;
+   font-size: 14px;
+   border-radius: 4px;
+}
+.p-button-label {
+   font-weight: 500;
+}
+/* END PRIMENG BUTTON */
+
+/* START PRIMENG CARD */
+.p-card .p-card-content {
+   padding: 0;
+}
+/* END PRIMENG CARD */
