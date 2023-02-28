@@ -2,13 +2,15 @@
 <!-- cuando el valor de la variable mostrar modal cambia se emite el evento al componente hijo -->
 <app-crear-usuario
    [mostrarModalInput]="modalCrearVisible"
-   (ocultarModalOutput)="ocultarModalCrear($event)">
+   (ocultarModalCanceladoOutput)="ocultarModalCrearCancelado($event)"
+   (ocultarModalCreadoOkOutput)="ocultarModalCrear($event)">
 </app-crear-usuario>
 
 <app-editar-usuario
    [usuarioInput]="form.get('usuario')?.value"
    [mostrarModalInput]="modalEditarVisible"
-   (ocultarModalOutput)="ocultarModalEditar($event)">
+   (ocultarModalCanceladoOutput)="ocultarModalEditarCancelado($event)"
+   (ocultarModalEditadoOkOutput)="ocultarModalEditar($event)">
 </app-editar-usuario>
 
 <!-- Confirm -->

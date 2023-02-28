@@ -3,11 +3,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Rol } from '../../classes/rol';
 import { RolService } from '../../services/rol.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-crear-editar-rol',
   templateUrl: './crear-editar-rol.component.html',
-  styleUrls: ['./crear-editar-rol.component.css']
+  styleUrls: ['./crear-editar-rol.component.css'],
+  providers: [MessageService],
 })
 export class CrearEditarRolComponent {
   mostrarModal: boolean = false;
@@ -16,7 +18,8 @@ export class CrearEditarRolComponent {
     name: ['', [Validators.required]]
   });
   
-  constructor(private fb: FormBuilder, private rolService: RolService) { }
+  constructor(private fb: FormBuilder, private rolService: RolService,
+              private messageService: MessageService) { }
 
   @Input() set mostrarModalInput(mostrarModal: boolean) {
     if (mostrarModal) {
@@ -44,12 +47,11 @@ export class CrearEditarRolComponent {
     let rol: Rol = this.formRol.value;
     this.rolService.registrarRol(rol).subscribe({
       next: (resp) => {
-        console.log(resp);
         this.ocultarModalDatoCreado();
+        this.messageService.add({severity:'success', summary:'Confirmed', detail:'You have accepted'});
       },
       error: (err: HttpErrorResponse) => {
-        console.log(err.error);
-        
+        // console.log(err.error);
       }
    })
   }

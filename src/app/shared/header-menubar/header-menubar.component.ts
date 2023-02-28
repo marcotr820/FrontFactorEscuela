@@ -18,19 +18,31 @@ export class HeaderMenubarComponent implements OnInit {
     return [CS.SUPERADMIN, CS.ADMIN];
   }
 
+  private get rolAdmin(): string[] {
+    return [CS.ADMIN];
+  }
+
+  private get rolSuperAdmin(): string[] {
+    return [CS.SUPERADMIN];
+  }
+
   ngOnInit(): void {
     this.items = [
       {
-        label: 'Usuarios', icon: 'pi pi-fw pi-envelope', routerLink: 'usuarios', 
+        label: 'Usuarios', icon:'pi pi-fw pi-users', routerLink: 'usuarios', 
         visible: this.rolSuperAdminRolAdmin.includes(this.authService._tokenDatos.role)
       },
-      {label: 'Roles', icon: 'pi pi-fw pi-unlock', routerLink: 'roles'},
-      {label: 'Iniciar Sesion', visible: !this.authService.isLoggedIn$, icon: 'pi pi-fw pi-user', routerLink: 'login'},
+      {
+        label: 'Roles', routerLink: 'roles',
+        visible: this.rolSuperAdmin.includes(this.authService._tokenDatos.role)
+      },
+      {label: 'Iniciar Sesion', visible: !this.authService.isLoggedIn$, routerLink: 'login'},
       {label: 'Soporte', icon: 'pi pi-fw pi-envelope'},
-      {label: 'Cuenta', icon: 'pi pi-fw pi-android', routerLink: 'cuenta'},
+      {label: 'Cuenta', icon: 'pi pi-fw pi-lock-open', routerLink: 'cuenta'},
       // {icon: 'pi pi-fw pi-user', visible: this.authService.isLoggedIn$, command: () => this.eliminarToken(), routerLink: 'login'},
       {
         styleClass:'estilo-dropdown alinear-derecha',
+        tabindex: '9999',
         icon: 'pi pi-fw pi-user',
         items: [
           {label: 'Registro Como: jose luis perales@gmail.com', disabled: true},

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators, AsyncValidator } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators, AsyncValidator, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { RegistroNormal } from './classes/registroNormal';
@@ -19,7 +19,7 @@ export class RegistroComponent implements OnInit {
       email: ['', {
          validators: [Validators.required, Validators.pattern( this.validatorS.emailPattern )],
          asyncValidators: [this.emailValidator],
-         updateOn: 'blur' //actualizacion de campo por propiedad
+         updateOn: 'change' //actualizacion de campo por propiedad
       }],
       password: ['', [Validators.required]],
       password2: ['', [Validators.required]],
@@ -45,8 +45,11 @@ export class RegistroComponent implements OnInit {
 
    crearUsuarioNormal(){
       this.formularioEnviado = true;
-      if (this.registroForm.invalid) { this.registroForm.markAllAsTouched(); return; }
-
+      if (!this.registroForm.valid) {
+         console.log(this.registroForm.controls);
+         this.registroForm.updateValueAndValidity;
+         this.registroForm.markAllAsTouched(); return;
+      }
       console.log('enviado');
       
       let registroUsuario: RegistroNormal = this.registroForm.value;
@@ -56,20 +59,17 @@ export class RegistroComponent implements OnInit {
          },
          error: (err) => console.log(err)
       });
-      this.formularioEnviado = false;
    }
 
-   // passwordNoConinciden(){
-   //    const pass1 = this.registroForm.get("password")?.value;
-   //    const pass2 = this.registroForm.get("password2")?.value;
-   //    if ( (pass1 !== pass2) && this.formSubmitted) {
-   //       return true;
-   //    }
-   //    return false;
-   // }
+   emailNoValido(){
+      if(this.registroForm.get('email')?.dirty){
+         return true;
+      }
+      return false;
+   }
 
    campoNoValido(campo: string): boolean {
-      if (this.registroForm.get(campo)?.invalid && this.formularioEnviado) {
+      if (!this.registroForm.get(campo)?.valid && this.formularioEnviado) {
          return true;
       }
       return false;

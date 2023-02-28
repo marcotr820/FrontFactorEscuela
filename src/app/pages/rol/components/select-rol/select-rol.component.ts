@@ -15,7 +15,6 @@ export class SelectRolComponent implements OnInit {
 
   @Input() set rolInput(rolRecibido: string) {
     if (!!rolRecibido) {
-      console.log(rolRecibido, 'asd');
       this.rolSeleccionadoInput = rolRecibido;
       this.cambiarRol();
     }
@@ -50,9 +49,6 @@ export class SelectRolComponent implements OnInit {
   getRoles() {
     this.rolService.GetRolesService().subscribe(resp => {
       this.roles = resp;
-      // this.formRol.reset({
-      //   rol: resp[0]
-      // });
     })
   }
 

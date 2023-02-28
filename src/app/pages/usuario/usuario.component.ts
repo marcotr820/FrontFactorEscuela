@@ -50,7 +50,11 @@ export class UsuarioComponent implements OnInit {
     this.modalCrearVisible = true;
   }
   ocultarModalCrear(valor: boolean) {
+    this.GetAll();
     this.modalCrearVisible = valor;
+  }
+  ocultarModalCrearCancelado(valor: boolean){ 
+    this.modalCrearVisible = valor; 
   }
 
   cambiarEstadoUsuario(usuarioId: string){
@@ -62,10 +66,15 @@ export class UsuarioComponent implements OnInit {
   }
 
   mostrarModalEditar(usuario: Usuario){
-    this.form.get('usuario')?.setValue(usuario);
+    //{...usuario} toma una copia del valor y no el valor en si
+    this.form.get('usuario')?.setValue({...usuario});
     this.modalEditarVisible = true;
   }
   ocultarModalEditar(valor: boolean){
+    this.GetAll();
+    this.modalEditarVisible = valor 
+  }
+  ocultarModalEditarCancelado(valor: boolean){
     this.modalEditarVisible = valor 
   }
 
@@ -84,7 +93,7 @@ export class UsuarioComponent implements OnInit {
     this.usuarioService.eliminarService(id).subscribe({
       next: (resp) =>{
         this.GetAll();
-        this.messageService.add({severity:'info', summary:'Confirmed', detail:'You have accepted'});
+        this.messageService.add({severity:'success', summary:'Confirmed', detail:'You have accepted'});
       }
     })
   }

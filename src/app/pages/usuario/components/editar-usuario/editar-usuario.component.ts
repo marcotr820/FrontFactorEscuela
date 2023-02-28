@@ -29,7 +29,8 @@ export class EditarUsuarioComponent {
       });
     }
   }
-  @Output() ocultarModalOutput: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() ocultarModalCanceladoOutput: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() ocultarModalEditadoOkOutput: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   formEditarUsuario:FormGroup = this.fb.group({
     id: ['', []],
@@ -42,7 +43,6 @@ export class EditarUsuarioComponent {
 
   editarUsuario(e: Event){
     e.preventDefault();
-    console.log(this.formEditarUsuario.value);
     if(this.formEditarUsuario.invalid){ return; }
     let usuario = this.formEditarUsuario.value;
     this.us.editarUsuarioAutorizadoService(usuario).subscribe({
@@ -64,11 +64,17 @@ export class EditarUsuarioComponent {
     }
   }
 
-  ocultarModal(event?: Event) {
+  ocultarModal(){
+    this.modalVisible = false;
+    if (!this.modalVisible) {
+      this.ocultarModalEditadoOkOutput.emit(this.modalVisible);
+    }
+  }
+  ocultarModalCancelado(event?: Event) {
     event?.preventDefault();
     this.modalVisible = false;
     if (!this.modalVisible) {
-      this.ocultarModalOutput.emit(this.modalVisible);
+      this.ocultarModalCanceladoOutput.emit(this.modalVisible);
     }
   }
 }

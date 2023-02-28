@@ -6,3 +6,10 @@
    flex-direction: column;
    align-items: center;
 }
+.p-inputtext.ng-dirty.ng-invalid{
+   border-color: none;
+}
+/* .invalidInput {
+   border-color: darkblue;
+   border: 2px solid;
+} */

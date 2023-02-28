@@ -1,5 +1,9 @@
+
+<!-- Toast -->
+<p-toast></p-toast>
+
 <p-dialog header="Registrar Usuario" 
-          [(visible)]="mostrarModal" [modal]="true" [style]="{width: '450px'}"
+          [(visible)]="modalVisible" [modal]="true" [style]="{width: '450px'}"
           [draggable]="false" [closeOnEscape]="false" [resizable]="false" [closable]="false"
           [contentStyle]="{paddingBottom:'7px', paddingTop:'5px'}">
   <form autocomplete="off" [formGroup]="formRegistroAutorizado" (ngSubmit)="crearUsuario($event)">
@@ -32,24 +36,32 @@
 
             <div class="field">
               <label>Password</label>
-              <input type="text" formControlName="password" pInputText [style]="{ width: '100%' }"
-                [ngClass]="{'ng-invalid ng-dirty': campoEsValido('password')}"/>
+              <p-password type="password" [toggleMask]="true" [feedback]="false" styleClass="w-full"
+                    [ngClass]="{'ng-invalid ng-dirty': campoEsValido('password')}" formControlName="password" 
+                    required inputStyleClass="w-full"></p-password>
+              <!-- <input type="text" formControlName="password" pInputText [style]="{ width: '100%' }"
+                [ngClass]="{'ng-invalid ng-dirty': campoEsValido('password')}"/> -->
               <small *ngIf="campoEsValido('password')" class="p-error block">El password es obligatorio.</small>
             </div>
             <div class="field ocultar">
               <label>Confirmar Password</label>
-              <input type="text" formControlName="password2" pInputText [style]="{ width: '100%' }" />
+              <p-password type="password" [toggleMask]="true" [feedback]="false" styleClass="w-full"
+                    [ngClass]="{'ng-invalid ng-dirty': campoEsValido('password2')}" formControlName="password2" 
+                    required inputStyleClass="w-full"></p-password>
+              <!-- <input type="text" formControlName="password2" pInputText [style]="{ width: '100%' }" /> -->
             </div>
 
           </div>
           <div class="card">
             <div class="flex justify-content-end align-items-center">
-              <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text"
-                (click)="ocultarModal($event)"></button>
+              <button type="button" pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text"
+                      (click)="ocultarModalCancelado()"></button>
               <button pButton type="submit" pRipple label="Guardar" icon="pi pi-check" class="p-button-text ml-2"></button>
             </div>
           </div>
           <!-- {{ formRegistroAutorizado.value | json }} -->
+          <h4>email</h4>
+          <pre>{{ formRegistroAutorizado.controls['email'].errors | json }}</pre>
         </div>
       </div>
     </div>

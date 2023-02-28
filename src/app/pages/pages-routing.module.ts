@@ -22,7 +22,12 @@ const rutasHijas: Routes = [
           rolesPermitidos: [CS.SUPERADMIN, CS.ADMIN],
         }
       },
-      { path: 'roles', component: RolComponent},
+      { 
+        path: 'roles', component: RolComponent, canActivate: [TieneRolGuard],
+        data: {
+          rolesPermitidos: [CS.SUPERADMIN],
+        }
+      },
     ]
   },
 ];

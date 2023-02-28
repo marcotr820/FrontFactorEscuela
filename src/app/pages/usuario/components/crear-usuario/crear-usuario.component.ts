@@ -7,23 +7,24 @@ import { Respuesta } from '../../../../shared/classes/respuesta';
 import { DataResult } from '../../../../shared/classes/dataResult';
 import { EmailValidatorService } from '../../services/email-validator.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MessageService } from 'primeng/api';
 
 @Component({
    selector: 'app-crear-usuario',
    templateUrl: './crear-usuario.component.html',
    styleUrls: ['./crear-usuario.component.css'],
+   providers: [MessageService],
    encapsulation: ViewEncapsulation.None
 })
 export class CrearUsuarioComponent {
-   mostrarModal: boolean = false;
+   modalVisible: boolean = false;
    formSubmitted: boolean = false;
 
    @Input() set mostrarModalInput(mostrarModal: boolean) {
       if (mostrarModal) {
-         this.mostrarModal = mostrarModal;
+         this.modalVisible = mostrarModal;
       }
    }
-   @Output() ocultarModalOutput: EventEmitter<boolean> = new EventEmitter<boolean>();
 
    public formRegistroAutorizado: FormGroup = this.fb.group({
       userName: ['', [Validators.required]],
@@ -38,10 +39,15 @@ export class CrearUsuarioComponent {
    });
 
    constructor(private fb: FormBuilder, private usuarioService: UsuarioService,
-               private emailValidator: EmailValidatorService) {}
+               private emailValidator: EmailValidatorService, private messageService: MessageService) {}
+
+   @Output() ocultarModalCreadoOkOutput: EventEmitter<boolean> = new EventEmitter<boolean>();
+   @Output() ocultarModalCanceladoOutput: EventEmitter<boolean> = new EventEmitter<boolean>();
 
    get emailErrorMsj(): string {
       const errores = this.formRegistroAutorizado.get('email')?.errors;
+      console.log(this.formRegistroAutorizado.get('email')?.hasError('required'));
+      
       if(errores?.['required']) { return 'El email es obligatorio' }
       if(errores?.['emailTomado']) { return 'El email ya está en uso.' }
       return '';
@@ -62,6 +68,7 @@ export class CrearUsuarioComponent {
                return;
             }
             this.ocultarModal();
+            this.messageService.add({severity:'success', summary:'Confirmed', detail:'You have accepted'});
          },
          error: (err: HttpErrorResponse) => {
             console.log(err.error);
@@ -71,10 +78,15 @@ export class CrearUsuarioComponent {
 
    ocultarModal(event?: Event) {
       event?.preventDefault();
-      this.mostrarModal = false;
-      if (!this.mostrarModal) {
-         this.ocultarModalOutput.emit(this.mostrarModal);
+      this.modalVisible = false;
+      if (!this.modalVisible) {
+         this.ocultarModalCreadoOkOutput.emit(this.modalVisible);
       }
+   }
+
+   ocultarModalCancelado(){
+      this.modalVisible = false;
+      this.ocultarModalCanceladoOutput.emit(this.modalVisible);
    }
 
    recibirRol(rol: Rol){

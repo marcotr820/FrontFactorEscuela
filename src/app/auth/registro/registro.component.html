@@ -9,15 +9,18 @@
 
          <div class="field">
             <label for="">Usuario</label>
-            <input type="text" pInputText [style]="{ width: '100%' }" formControlName="userName" required
+            <input type="text" pInputText [style]="{ width: '100%' }" id="userName" formControlName="userName" required
                   [ngClass]="{'ng-invalid ng-dirty': campoNoValido('userName')}">
             <small *ngIf="campoNoValido('userName')" class="p-error block">El usuario es obligatorio.</small>
          </div>
          <div class="field">
             <label for="">Email</label>
-            <input type="text" pInputText [style]="{ width: '100%' }" formControlName="email" required
-                  [ngClass]="{'ng-invalid ng-dirty': campoNoValido('email')}">
-            <small *ngIf="campoNoValido('email')" class="p-error block">{{ emailMsjError }}</small>
+            <span class="p-input-icon-right block">
+               <i class="pi pi-spin pi-spinner" *ngIf="registroForm.controls['email'].pending"></i>
+               <input type="text" pInputText [style]="{ width: '100%' }" formControlName="email" required
+                  [ngClass]="{'ng-invalid ng-dirty': emailNoValido()}">
+            </span>
+            <small *ngIf="emailNoValido()" class="p-error block">{{ emailMsjError }}</small>
          </div>
          <div class="field">
             <label for="">Password</label>
@@ -34,11 +37,13 @@
 
          <div class="flex justify-content-between">
             <p-button routerLink="/login" label="Atras" styleClass="p-button-link"></p-button>
-            <button type="submit" pButton label="Registrarme"></button>
+            <!-- [disabled]="registroForm.invalid" -->
+            <button type="submit" [disabled]="registroForm.pending" pButton label="Registrarme"></button>
          </div>
 
-         {{ registroForm.valid }}
-
+         <span>formulario estado </span>
+         <strong>{{ registroForm.valid }}</strong>
+         <h5>{{ formularioEnviado }}</h5>
       </p-card>
    </form>
 </div>
