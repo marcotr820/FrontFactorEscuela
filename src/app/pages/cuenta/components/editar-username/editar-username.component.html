@@ -1,0 +1,53 @@
+<p-dialog header="Cambiar nombre de usuario" [(visible)]="modalVisible" [modal]="true" [style]="{width: '500px'}"
+    [draggable]="false" [resizable]="false" [closable]="false"
+    [contentStyle]="{paddingBottom:'7px', paddingTop:'5px'}">
+
+    <div class="bg-green-200 border-round-md border-2 border-green-500 p-5 mb-5"
+        [ngClass]="{'ocultar': !exitoMsj}">
+        <span class="font-semibold">Felicidades tu se ha actualizado tu nombre de usuario.</span>
+    </div>
+
+    <form autocomplete="off" [formGroup]="formEditarUserName" (ngSubmit)="editarUserName($event)"
+        [ngClass]="{'ocultar': exitoMsj}">
+        <!-- formulario principal -->
+        <div class="card">
+            <div class="grid">
+                <div class="col">
+                    <div class="formgrid">
+
+                        <!-- <p-message styleClass="w-full mb-2 flex justify-content-start" severity="error" 
+                            text="Algo salió mal usuario o password incorrectos." ></p-message> -->
+
+                        <p-messages severity="error" [ngClass]="{'ocultar': !erroMsj}">
+                            <ng-template pTemplate>
+                                <img src="https://primefaces.org/cdn/primeng/images/primeng.svg" width="32" />
+                                <div class="ml-2 font-semibold text-sm">Algo salio mal. Inténtalo de nuevo.</div>
+                            </ng-template>
+                        </p-messages>
+
+                        <p>nombre de usuario actual <strong>{{ getDatosUsuario.userName }}</strong></p>
+                        <div class="field">
+                            <label>Nombre de usuario</label>
+                            <span class="p-input-icon-right block">
+                                <i class="pi pi-spin pi-spinner" *ngIf="formEditarUserName.controls['userName'].pending"></i>
+                                <input type="text" pInputText [style]="{ width: '100%' }" formControlName="userName" required
+                                   [ngClass]="{'ng-invalid': campoEsValido('userName')}">
+                            </span>
+                            <small *ngIf="campoEsValido('userName')" class="p-error block">{{ userNameMsjError }}</small>
+                        </div>
+                    </div>
+                    <!-- {{ formRegistroAutorizado.value | json}} -->
+                    <div class="card">
+                        <div class="flex justify-content-end align-items-center">
+                            <button type="button" pButton pRipple label="Cancelar" icon="pi pi-times"
+                                class="p-button-text" (click)="cancelarModal()"></button>
+                            <button pButton type="submit" pRipple label="Guardar" icon="pi pi-check"
+                                class="p-button-text ml-2"></button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</p-dialog>

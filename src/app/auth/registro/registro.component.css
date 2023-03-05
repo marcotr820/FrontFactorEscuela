@@ -1,15 +1,24 @@
 .content {
    display: flex;
-   margin: 82px auto 32px;
-   padding: 0 16px;
-   max-width: 960px;
+   height: 100vh;
+   justify-content: center;
    flex-direction: column;
    align-items: center;
 }
-.p-inputtext.ng-dirty.ng-invalid{
-   border-color: none;
+
+/* img */
+.p-card .p-card-title {
+   font-weight: 400;
+   text-align: center;
+   margin-bottom: 20px;
 }
-/* .invalidInput {
-   border-color: darkblue;
-   border: 2px solid;
-} */
+.p-card-header{
+   display: flex;
+   padding-top: 20px;
+   align-items: center;
+   justify-content: center !important;
+}
+.p-card-header img {
+   height: 50px;
+   width: 200px !important;
+}

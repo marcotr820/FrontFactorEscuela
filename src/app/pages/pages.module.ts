@@ -15,6 +15,8 @@ import { CuentaComponent } from './cuenta/cuenta.component';
 import { CrearEditarRolComponent } from './rol/components/crear-editar-rol/crear-editar-rol.component';
 import { CrearUsuarioComponent } from './usuario/components/crear-usuario/crear-usuario.component';
 import { EditarUsuarioComponent } from './usuario/components/editar-usuario/editar-usuario.component';
+import { EditarUsernameComponent } from './cuenta/components/editar-username/editar-username.component';
+import { EditarPasswordComponent } from './cuenta/components/editar-password/editar-password.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { EditarUsuarioComponent } from './usuario/components/editar-usuario/edit
     SelectRolComponent,
     CuentaComponent,
     CrearEditarRolComponent,
-    EditarUsuarioComponent
+    EditarUsuarioComponent,
+    EditarUsernameComponent,
+    EditarPasswordComponent
   ],
   imports: [
     CommonModule,

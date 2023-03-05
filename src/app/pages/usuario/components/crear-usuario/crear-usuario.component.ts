@@ -1,13 +1,14 @@
 import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Rol } from 'src/app/pages/rol/classes/rol';
 import { UsuarioService } from '../../services/usuario.service';
 import { RegistroAutorizado } from '../../classes/registroAutorizado';
 import { Respuesta } from '../../../../shared/classes/respuesta';
 import { DataResult } from '../../../../shared/classes/dataResult';
 import { EmailValidatorService } from '../../services/email-validator.service';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { MessageService } from 'primeng/api';
+import { ValidatorService } from 'src/app/shared/validator/validator.service';
 
 @Component({
    selector: 'app-crear-usuario',
@@ -17,8 +18,8 @@ import { MessageService } from 'primeng/api';
    encapsulation: ViewEncapsulation.None
 })
 export class CrearUsuarioComponent {
+
    modalVisible: boolean = false;
-   formSubmitted: boolean = false;
 
    @Input() set mostrarModalInput(mostrarModal: boolean) {
       if (mostrarModal) {
@@ -27,43 +28,55 @@ export class CrearUsuarioComponent {
    }
 
    public formRegistroAutorizado: FormGroup = this.fb.group({
-      userName: ['', [Validators.required]],
-      email: ['',{
-         validators: [Validators.required],
-         asyncValidators: [this.emailValidator],
-         updateOn: 'blur' //actualizacion de campo por propiedad
+      userName: ['', {
+         validators:[Validators.required, Validators.minLength(5)],
+         asyncValidators: [this.emailValidator.validarUserName(this.http)]
       }],
-      password: ['Admin123*', Validators.required],
-      password2: ['Admin123*', Validators.required],
+      email: ['',{
+         validators: [Validators.required, Validators.pattern(this.validatorS.emailPattern)],
+         asyncValidators: [this.emailValidator]
+      }],
+      password: ['', [Validators.required, Validators.minLength(7)]],
+      password2: ['', [Validators.required]],
       rol: ['', Validators.required],
+   }, {
+      validators: [this.passwordsIguales("password", "password2")],
    });
 
    constructor(private fb: FormBuilder, private usuarioService: UsuarioService,
-               private emailValidator: EmailValidatorService, private messageService: MessageService) {}
+               private emailValidator: EmailValidatorService, private messageService: MessageService,
+               private validatorS: ValidatorService, private http: HttpClient) {}
 
    @Output() ocultarModalCreadoOkOutput: EventEmitter<boolean> = new EventEmitter<boolean>();
    @Output() ocultarModalCanceladoOutput: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+   get userNameMsjError(): string{
+      const error = this.formRegistroAutorizado.get('userName')?.errors;
+      if(error?.['required']){ return 'El usuario es obligatorio.' }
+      if(error?.['minlength']){ return 'El usuario debe tener mas de 5 caracteres.' }
+      if(error?.['userNameTomado']){ return 'El nombre de usuario no esta disponible.' }
+      return '';
+   }
+
    get emailErrorMsj(): string {
-      const errores = this.formRegistroAutorizado.get('email')?.errors;
-      console.log(this.formRegistroAutorizado.get('email')?.hasError('required'));
-      
-      if(errores?.['required']) { return 'El email es obligatorio' }
-      if(errores?.['emailTomado']) { return 'El email ya está en uso.' }
+      const error = this.formRegistroAutorizado.get('email')?.errors;
+      if(error?.['required']) { return 'El email es obligatorio' }
+      if(error?.['pattern']){ return 'El email no tiene un formato correcto.' }
+      if(error?.['emailTomado']) { return 'El email ya está en uso.' }
       return '';
    }
 
    crearUsuario(event: Event){
       event.preventDefault();
-      // this.formSubmitted = true;
-      if (this.formRegistroAutorizado.invalid) {
-         this.formRegistroAutorizado.markAllAsTouched();
+      if (!this.formRegistroAutorizado.valid) {
+         Object.keys(this.formRegistroAutorizado.controls).forEach((key) => {
+            this.formRegistroAutorizado.get(key)?.markAsDirty();
+         });
          return;
       }
       let usuario: RegistroAutorizado = this.formRegistroAutorizado.value;
       this.usuarioService.crearUsuarioAutorizadoService(usuario).subscribe({
          next: (resp: Respuesta<DataResult>) => {
-            console.log(resp);
             if(!!resp.error){
                return;
             }
@@ -97,9 +110,22 @@ export class CrearUsuarioComponent {
 
    campoEsValido(campo: string): boolean {
       if (this.formRegistroAutorizado.get(campo)?.invalid 
-         && this.formRegistroAutorizado.controls[campo].touched) {
+         && this.formRegistroAutorizado.controls[campo].dirty) {
          return true;
       }
       return false;
+   }
+
+   passwordsIguales(campo1:string, campo2:string){
+      return (formGroup: AbstractControl) : ValidationErrors | null => {
+         const pass1 = formGroup.get(campo1)?.value;
+         const pass2 = formGroup.get(campo2)?.value;
+         if (pass1 !== pass2){
+            formGroup.get(campo2)?.setErrors({ noIguales: true });
+            return { noIguales: true }
+         }
+         formGroup.get(campo2)?.setErrors(null);
+         return null;
+      }
    }
 }

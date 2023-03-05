@@ -11,7 +11,6 @@ import { UsuarioService } from '../../services/usuario.service';
 })
 export class EditarUsuarioComponent {
   modalVisible: boolean = false;
-  emailErrorMsj: any;
   
   @Input() set mostrarModalInput(mostrarModal: boolean) {
     if (mostrarModal) {
@@ -40,6 +39,14 @@ export class EditarUsuarioComponent {
   });
 
   constructor(private fb: FormBuilder, private us: UsuarioService){}
+
+  get emailErrorMsj(): string {
+    const error = this.formEditarUsuario.get('email')?.errors;
+    if(error?.['required']) { return 'El email es obligatorio' }
+    if(error?.['pattern']){ return 'El email no tiene un formato correcto.' }
+    if(error?.['emailTomado']) { return 'El email ya está en uso.' }
+    return '';
+  }
 
   editarUsuario(e: Event){
     e.preventDefault();

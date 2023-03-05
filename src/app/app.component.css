@@ -1,3 +1,7 @@
+html, body{
+   margin: 0;
+}
+
 /* START PRIMENG INPUT */
 .p-inputtext {
    padding: 6px;
@@ -16,9 +20,14 @@
    padding: 6px 10px;
    font-size: 14px;
    border-radius: 4px;
+   text-decoration: none;
+   border: none;
 }
 .p-button-label {
    font-weight: 500;
+}
+.p-button.c-verde {
+   background: #184A2C;
 }
 /* END PRIMENG BUTTON */
 

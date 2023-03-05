@@ -1,18 +1,20 @@
-.topbar {
-   background-color: #E8EDEA;
-   height: 50px;
-   display: flex;
-   align-items: center;
-   width: 100%;
-}
 
+/* START HEADER */
 .myStyle.p-menubar {
    /* background: #E8EDEA; */
    border-radius: 0;
    height: 50px;
-   flex-direction: row-reverse;
+   justify-content: space-between;
+   /* flex-direction: row-reverse; */
    /* padding: 0 40px; */
 }
+.myStyle.p-menubar .p-menubar-button {
+   
+}
+.myStyle.p-menubar .p-menubar-end {
+   display: none;
+}
+/* END HEADER */
 
 /* item dropdown */
 .p-submenu-list {

@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { UsuarioBloqueado } from '../../classes/usuario-bloqueado';
-import { AuthService } from '../../../services/auth.service';
+import { Usuario } from '../../../../pages/usuario/classes/usuario';
 
 @Component({
   selector: 'app-usuario-bloqueado',
@@ -10,8 +9,9 @@ import { AuthService } from '../../../services/auth.service';
 export class UsuarioBloqueadoComponent {
 
   modalVisible:boolean = false;
+  usuarioBloqueado = new Usuario();
 
-  constructor(public authService: AuthService){}
+  constructor(){}
 
   @Input() set modalVisibleInput(modalVisibleBloqueo: boolean) {
     if (modalVisibleBloqueo) {

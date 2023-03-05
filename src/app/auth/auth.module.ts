@@ -9,26 +9,30 @@ import { RegistroComponent } from './registro/registro.component';
 import { PrimeNgModule } from '../prime-ng/prime-ng.module';
 import { TokenInterceptorService } from './interceptores/token-interceptor.service';
 import { UsuarioBloqueadoComponent } from './login/components/usuario-bloqueado/usuario-bloqueado.component';
+import { RecuperarCuentaComponent } from './recuperar-cuenta/recuperar-cuenta.component';
+import { RestablecerPasswordComponent } from './restablecer-password/restablecer-password.component';
 
 @NgModule({
-  declarations: [
-    LoginComponent,
-    RegistroComponent,
-    UsuarioBloqueadoComponent
-  ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RouterModule,
-    HttpClientModule,
-    PrimeNgModule
-  ],
-  exports: [
-    LoginComponent,
-    RegistroComponent
-  ],
-  providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true}
-  ]
+   declarations: [
+      LoginComponent,
+      RegistroComponent,
+      UsuarioBloqueadoComponent,
+      RecuperarCuentaComponent,
+      RestablecerPasswordComponent
+   ],
+   imports: [
+      CommonModule,
+      ReactiveFormsModule,
+      RouterModule,
+      HttpClientModule,
+      PrimeNgModule
+   ],
+   exports: [
+      LoginComponent,
+      RegistroComponent
+   ],
+   providers: [
+      { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true }
+   ]
 })
 export class AuthModule { }

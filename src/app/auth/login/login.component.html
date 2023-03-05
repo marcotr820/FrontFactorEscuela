@@ -5,34 +5,41 @@
 
 <div class="content">
   <form [formGroup]="loginForm" (ngSubmit)="login()">
-    <p-card header="Iniciar Sesion" 
-            subheader="vida salud" 
-            [style]="{width: '370px', marginTop:'50px'}" 
-            styleClass="p-card-shadow">
+    <p-card header="Iniciar sesión"
+            [style]="{width: '450px'}" 
+            styleClass="shadow-2 m-0">
 
       <ng-template pTemplate="header">
-        <img alt="Card" src="https://primefaces.org/cdn/primeng/images/usercard.png">
+        <img alt="Card" src="../../../assets/images/vidaSalud-Logo.svg">
       </ng-template>
 
-      <p-messages [(value)]="msjError" [enableService]="false"></p-messages>
-
+      <p-message styleClass="w-full mb-2 flex justify-content-start" severity="error" 
+                  text="Algo salió mal usuario o password incorrectos." [ngClass]="{'ocultar': !mensajeErrorVisible}"></p-message>
+      
       <div class="field">
         <label>Usuario</label>
-        <input type="text" id="userName" pInputText [style]="{ width: '100%' }" 
-              [ngClass]="{'ng-invalid ng-dirty': campoNoValido('userName')}" formControlName="userName" required>
-        <small *ngIf="campoNoValido('userName')" class="p-error block">El usuario es obligatorio.</small>
+        <input type="text" id="userName" pInputText [style]="{ width: '100%' }" formControlName="userName"
+              [ngClass]="{'ng-invalid ng-dirty': campoNoValido('userName')}" required>
+        <small *ngIf="campoNoValido('userName')" class="p-error block">El usuario debe tener al menos 5 caracteres.</small>
       </div>
       <div class="field">
         <label>Password</label>
-        <p-password type="password" [toggleMask]="true" [feedback]="false" styleClass="w-full"
-                    [ngClass]="{'ng-invalid ng-dirty': campoNoValido('password')}" formControlName="password" 
+        <p-password type="password" [toggleMask]="true" [feedback]="false" formControlName="password"
+                    [ngClass]="{'ng-invalid ng-dirty': campoNoValido('password')}" styleClass="w-full"
                     required inputStyleClass="w-full"></p-password>
-        <small *ngIf="campoNoValido('password')" class="p-error block">El password es obligatorio.</small>
+        <small *ngIf="campoNoValido('password')" class="p-error block">El password debe tener al menos 7 caracteres.</small>
+
+        <a class="block mt-3 text-right" href="recuperar-cuenta">
+          <small>He olvidado la contraseña</small>
+        </a>
+
       </div>
 
-      <div class="flex justify-content-between">
-        <button type="submit" pButton label="Iniciar Sesion"></button>
-        <p-button routerLink="/registro" label="Registrarse" styleClass="p-button-link"></p-button>
+      <button class="block w-full mb-2 c-verde" type="submit" pButton label="Iniciar Sesion"></button>
+      <div class="flex justify-content-center align-items-center">
+        <span>No tienes una  cuenta?,</span>
+        <p-button class="inline m-0" routerLink="/registro" label="Registrate" styleClass="p-button-link"
+        ></p-button>
       </div>
       
     </p-card>

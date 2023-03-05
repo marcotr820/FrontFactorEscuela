@@ -11,6 +11,9 @@ import {PasswordModule} from 'primeng/password';
 import {MessagesModule} from 'primeng/messages';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ToastModule} from 'primeng/toast';
+import {MessageModule} from 'primeng/message';
+import {DividerModule} from 'primeng/divider';
+import {SplitButtonModule} from 'primeng/splitbutton';
 
 @NgModule({
   declarations: [],
@@ -26,7 +29,10 @@ import {ToastModule} from 'primeng/toast';
     PasswordModule,
     MessagesModule,
     ConfirmDialogModule,
-    ToastModule
+    ToastModule,
+    MessageModule,
+    DividerModule,
+    SplitButtonModule
   ]
 })
 export class PrimeNgModule { }

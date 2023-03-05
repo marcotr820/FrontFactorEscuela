@@ -6,27 +6,22 @@
    align-items: center;
 }
 
-/* style p-message */
-.p-inline-message.p-inline-message-error {
-   border-width: 1px;
-}
-.p-element.ocultar {
-   display: none;
-}
-
 /* img */
 .p-card .p-card-title {
    font-weight: 400;
    text-align: center;
    margin-bottom: 15px;
 }
-.p-card-header{
+
+.p-card-header {
    display: flex;
    padding-top: 20px;
    align-items: center;
    justify-content: center !important;
 }
+
 .p-card-header img {
    height: 50px;
    width: 200px !important;
 }
+/* img */

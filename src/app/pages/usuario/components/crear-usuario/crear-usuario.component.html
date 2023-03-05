@@ -2,9 +2,9 @@
 <!-- Toast -->
 <p-toast></p-toast>
 
-<p-dialog header="Registrar Usuario" 
-          [(visible)]="modalVisible" [modal]="true" [style]="{width: '450px'}"
-          [draggable]="false" [closeOnEscape]="false" [resizable]="false" [closable]="false"
+<p-dialog header="Registrar Usuario" [(visible)]="modalVisible" [modal]="true"
+          [style]="{width: '450px'}" [resizable]="false" [closable]="false"
+          [draggable]="false" [closeOnEscape]="false" 
           [contentStyle]="{paddingBottom:'7px', paddingTop:'5px'}">
   <form autocomplete="off" [formGroup]="formRegistroAutorizado" (ngSubmit)="crearUsuario($event)">
     <!-- formulario principal -->
@@ -14,14 +14,20 @@
           <div class="formgrid">
             <div class="field">
               <label>Usuario</label>
-              <input type="text" formControlName="userName" pInputText [style]="{ width: '100%' }"
-                      [ngClass]="{'ng-invalid ng-dirty': campoEsValido('userName')}"/>
-              <small *ngIf="campoEsValido('userName')" class="p-error block">El usuario es obligatorio.</small>
+              <span class="p-input-icon-right block">
+                <i class="pi pi-spin pi-spinner" *ngIf="formRegistroAutorizado.controls['userName'].pending"></i>
+                <input type="text" pInputText [style]="{ width: '100%' }" formControlName="userName" required
+                   [ngClass]="{'ng-invalid': campoEsValido('userName')}">
+              </span>
+              <small *ngIf="campoEsValido('userName')" class="p-error block">{{ userNameMsjError }}</small>
             </div>
             <div class="field">
               <label>Email</label>
-              <input type="text" formControlName="email" pInputText [style]="{ width: '100%' }"
-                      [ngClass]="{'ng-invalid ng-dirty': campoEsValido('email')}"/>
+              <span class="p-input-icon-right block">
+                <i class="pi pi-spin pi-spinner" *ngIf="formRegistroAutorizado.controls['email'].pending"></i>
+                <input type="text" pInputText [style]="{ width: '100%' }" formControlName="email" required
+                   [ngClass]="{'ng-invalid': campoEsValido('email')}">
+              </span>
               <small *ngIf="campoEsValido('email')" class="p-error block">{{ emailErrorMsj }}</small>
             </div>
 
@@ -39,16 +45,14 @@
               <p-password type="password" [toggleMask]="true" [feedback]="false" styleClass="w-full"
                     [ngClass]="{'ng-invalid ng-dirty': campoEsValido('password')}" formControlName="password" 
                     required inputStyleClass="w-full"></p-password>
-              <!-- <input type="text" formControlName="password" pInputText [style]="{ width: '100%' }"
-                [ngClass]="{'ng-invalid ng-dirty': campoEsValido('password')}"/> -->
-              <small *ngIf="campoEsValido('password')" class="p-error block">El password es obligatorio.</small>
+              <small *ngIf="campoEsValido('password')" class="p-error block">El password debe tener al menos 7 caracteres.</small>
             </div>
             <div class="field ocultar">
               <label>Confirmar Password</label>
               <p-password type="password" [toggleMask]="true" [feedback]="false" styleClass="w-full"
-                    [ngClass]="{'ng-invalid ng-dirty': campoEsValido('password2')}" formControlName="password2" 
+                    [ngClass]="{'ng-invalid': campoEsValido('password2')}" formControlName="password2" 
                     required inputStyleClass="w-full"></p-password>
-              <!-- <input type="text" formControlName="password2" pInputText [style]="{ width: '100%' }" /> -->
+              <small *ngIf="campoEsValido('password2')" class="p-error block">Los password no coinciden. Inténtalo de nuevo.</small>
             </div>
 
           </div>
@@ -60,8 +64,6 @@
             </div>
           </div>
           <!-- {{ formRegistroAutorizado.value | json }} -->
-          <h4>email</h4>
-          <pre>{{ formRegistroAutorizado.controls['email'].errors | json }}</pre>
         </div>
       </div>
     </div>

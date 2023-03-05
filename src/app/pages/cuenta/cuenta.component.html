@@ -1,15 +1,55 @@
-<p-card header="Cambia tu Contraseña" [style]="{'width': '500px'}">
-   <form action="" (ngSubmit)="cambiarPassword()">
-      <div class="field">
-         <label for="username1" class="block">Contraseña Actual</label>
-         <p-password type="password" [toggleMask]="true" [feedback]="false" styleClass="w-full"
-                    required inputStyleClass="w-full"></p-password>
-      </div>
-      <div class="field">
-         <label for="username1" class="block">Nueva Contraseña</label>
-         <p-password type="password" [toggleMask]="true" [feedback]="false" styleClass="w-full"
-                    required inputStyleClass="w-full"></p-password>
-      </div>
-      <button type="submit" pButton label="Guardar Cambios"></button>
-   </form>
+
+
+<app-editar-username
+   [mostrarModalInput]="mostrarModalUserName"
+   (ocultarModalOutput)="ocultarModalUserName($event)"
+   (ocultarModalCanceladoOutput)="ocultarModalUserNameCancelado($event)"
+></app-editar-username>
+
+<p-card header="Configuración" [style]="{'width': '70rem', 'margin-bottom': '2em'}">
+   <p>En este apartado puedes cambiar los datos de tu cuenta.</p>
+
+   <div class="card">
+      <p-divider align="left">
+         <div class="inline-flex align-items-center">
+            <i class="pi pi-user mr-2"></i>
+            <b>
+               <h3 class="m-0">Ajustes del perfil</h3>
+            </b>
+         </div>
+      </p-divider>
+
+      <p>Cambia los datos de identificación de tu cuenta.</p>
+
+      <p-card>
+         <div class="flex align-items-center">
+            <span style="width: 13rem;" class="font-semibold">Nombre de usuario</span>
+            <span class="mr-2">{{ getDatosUsuario.userName }}</span>
+            <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-raised p-button-text p-button-plain"
+               (click)="modalEditarUserNameVisible()"></button>
+         </div>
+      </p-card>
+
+   </div>
+
+   <div class="card">
+      <p-divider align="left">
+         <div class="inline-flex align-items-center">
+            <i class="pi pi-lock mr-2"></i>
+            <b>
+               <h3 class="m-0">Seguridad</h3>
+            </b>
+         </div>
+      </p-divider>
+
+      <p>Mantén tu cuenta segura.</p>
+
+      <p-card>
+         <div class="flex align-items-center">
+            <span style="width: 13rem;" class="font-semibold">Password</span>
+            <p-button label="Cambiar password" styleClass="p-button-link"></p-button>
+         </div>
+      </p-card>
+
+   </div>
 </p-card>

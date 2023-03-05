@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { Usuario } from './classes/usuario';
 import { UsuarioService } from './services/usuario.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -19,6 +19,8 @@ export class UsuarioComponent implements OnInit {
   modalEditarVisible:boolean = false;
   statuses: any[] = [];
 
+  items: MenuItem[] = [];
+
   constructor(private usuarioService: UsuarioService, private confirmationService: ConfirmationService,
               private messageService: MessageService, private fb: FormBuilder) { }
 
@@ -27,6 +29,18 @@ export class UsuarioComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    this.items = [
+      {label: 'Update', command: () => {
+          // this.update();
+      }},
+      {label: 'Delete', command: () => {
+          // this.delete();
+      }},
+      {label: 'Angular.io', url: 'http://angular.io'},
+      {separator: true},
+      {label: 'Setup', routerLink: ['/setup']}
+    ];
+
     this.statuses = [
       {label: 'Habilitado', value: false},
       {label: 'Bloqueado', value: true},

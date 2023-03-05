@@ -1,0 +1,38 @@
+
+<div class="content">
+  <p-card [style]="{width: '450px'}" styleClass="shadow-2 m-0">
+
+    <ng-template pTemplate="header">
+      <img alt="Card" src="../../../assets/images/vidaSalud-logo.png">
+    </ng-template>
+
+    <div *ngIf="envioEmailCorrecto">
+      <p class="font-semibold">Se envio el enlace para restablecer tu password al correo electrónico proporcionado, el enlace puede tardar unos minutos en llegar.</p>
+      <a href="login" class="w-full" pButton label="Hecho"></a>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="enviarEmailRestablecerPassword()" *ngIf="!envioEmailCorrecto">
+
+      <p class="font-semibold">Necesitamos información de tu cuenta para poder recuperarla.</p>
+
+      <p-divider></p-divider>
+
+      <div class="field">
+        <label for="">Por favor introduce el Email con el que registraste tu cuenta.</label>
+        <input type="text" pInputText [style]="{ width: '100%' }" formControlName="email"
+              [ngClass]="{'ng-invalid': campoNoValido('email')}" required>
+        <small *ngIf="campoNoValido('email')" class="p-error block">{{ emailMsjError }}</small>
+      </div>
+
+      <button class="w-full" type="submit" pButton label="Enviarme enlace para restablecer mi password"></button>
+
+      <a class="block mt-3" href="login">
+        <small>Volver al Login</small>
+      </a>
+
+    </form>
+    
+  </p-card>
+</div>
+
+  

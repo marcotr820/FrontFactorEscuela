@@ -1,49 +1,49 @@
 <div class="content">
    <form [formGroup]="registroForm" (ngSubmit)="crearUsuarioNormal()">
-      <p-card header="Registrarme" subheader="vida salud" [style]="{width: '370px', marginTop:'50px'}"
-         styleClass="p-card-shadow">
+      <p-card header="Crea una cuenta" [style]="{width: '450px'}"
+         styleClass="shadow-2 m-0">
 
          <ng-template pTemplate="header">
-            <img alt="Card" src="https://primefaces.org/cdn/primeng/images/usercard.png">
+            <img alt="Card" src="../../../assets/images/vidaSalud-logo.png">
          </ng-template>
 
          <div class="field">
             <label for="">Usuario</label>
-            <input type="text" pInputText [style]="{ width: '100%' }" id="userName" formControlName="userName" required
-                  [ngClass]="{'ng-invalid ng-dirty': campoNoValido('userName')}">
-            <small *ngIf="campoNoValido('userName')" class="p-error block">El usuario es obligatorio.</small>
+            <span class="p-input-icon-right block">
+               <i class="pi pi-spin pi-spinner" *ngIf="registroForm.controls['userName'].pending"></i>
+               <input type="text" pInputText [style]="{ width: '100%' }" formControlName="userName" required
+                  [ngClass]="{'ng-invalid': campoNoValido('userName')}">
+            </span>
+            <small *ngIf="campoNoValido('userName')" class="p-error block">{{ userNameMsjError }}</small>
          </div>
          <div class="field">
             <label for="">Email</label>
             <span class="p-input-icon-right block">
                <i class="pi pi-spin pi-spinner" *ngIf="registroForm.controls['email'].pending"></i>
                <input type="text" pInputText [style]="{ width: '100%' }" formControlName="email" required
-                  [ngClass]="{'ng-invalid ng-dirty': emailNoValido()}">
+                  [ngClass]="{'ng-invalid': campoNoValido('email')}">
             </span>
-            <small *ngIf="emailNoValido()" class="p-error block">{{ emailMsjError }}</small>
+            <small *ngIf="campoNoValido('email')" class="p-error block">{{ emailMsjError }}</small>
          </div>
          <div class="field">
             <label for="">Password</label>
-            <input type="text" pInputText [style]="{ width: '100%' }" formControlName="password" required
-                  [ngClass]="{'ng-invalid ng-dirty': campoNoValido('password')}">
+            <p-password type="password" [toggleMask]="true" [feedback]="false" styleClass="w-full"
+                    [ngClass]="{'ng-invalid': campoNoValido('password')}" formControlName="password" 
+                    required inputStyleClass="w-full"></p-password>
             <small *ngIf="campoNoValido('password')" class="p-error block">El password debe ser mayor a 7 caracteres.</small>
          </div>
          <div class="field">
             <label for="">Confirmar</label>
-            <input type="text" pInputText [style]="{ width: '100%' }" formControlName="password2" required
-                  [ngClass]="{'ng-invalid ng-dirty': campoNoValido('password2')}">
-            <small *ngIf="campoNoValido('password2')" class="p-error block">Los password no coinciden.</small>
+            <p-password type="password" [toggleMask]="true" [feedback]="false" styleClass="w-full"
+                    [ngClass]="{'ng-invalid': campoNoValido('password2')}" formControlName="password2" 
+                    required inputStyleClass="w-full"></p-password>
+            <small *ngIf="campoNoValido('password2')" class="p-error block">Los password no coinciden. Inténtalo de nuevo.</small>
          </div>
 
          <div class="flex justify-content-between">
-            <p-button routerLink="/login" label="Atras" styleClass="p-button-link"></p-button>
-            <!-- [disabled]="registroForm.invalid" -->
+            <p-button routerLink="/login" label="Iniciar Sesión" styleClass="p-button-link"></p-button>
             <button type="submit" [disabled]="registroForm.pending" pButton label="Registrarme"></button>
          </div>
-
-         <span>formulario estado </span>
-         <strong>{{ registroForm.valid }}</strong>
-         <h5>{{ formularioEnviado }}</h5>
       </p-card>
    </form>
 </div>

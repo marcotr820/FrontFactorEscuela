@@ -1,7 +1,10 @@
 export class Usuario {
-  id: string = '';
-  userName: string = '';
-  email: string = '';
-  rol: string = '';
-  isBlocked: boolean = false;
+  constructor(
+    public id: string = '',
+    public userName: string = '',
+    public email: string = '',
+    public isBlocked: boolean = false,
+    public rol?: string,
+  ){}
+  
 }
