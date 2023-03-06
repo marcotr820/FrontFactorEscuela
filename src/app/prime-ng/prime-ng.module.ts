@@ -13,7 +13,6 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ToastModule} from 'primeng/toast';
 import {MessageModule} from 'primeng/message';
 import {DividerModule} from 'primeng/divider';
-import {SplitButtonModule} from 'primeng/splitbutton';
 
 @NgModule({
   declarations: [],
@@ -32,7 +31,6 @@ import {SplitButtonModule} from 'primeng/splitbutton';
     ToastModule,
     MessageModule,
     DividerModule,
-    SplitButtonModule
   ]
 })
 export class PrimeNgModule { }

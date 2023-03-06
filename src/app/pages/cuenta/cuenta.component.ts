@@ -11,20 +11,16 @@ import { Usuario } from '../usuario/classes/usuario';
 export class CuentaComponent {
 
    public mostrarModalUserName: boolean = false;
-   private usuario = new Usuario();
+   public mostrarModalPassword: boolean = false;
    public formCambiarPassword: FormGroup = this.fb.group({
       passwordActual: ['', [Validators.required]],
       nuevoPassword: ['', [Validators.required]]
    });
 
-   constructor(private fb: FormBuilder, private authService: AuthService) {
-      this.usuario = this.authService.getDatosUsuario;
-   }
+   constructor(private fb: FormBuilder, private authService: AuthService) {}
 
-   get getDatosUsuario() { return this.usuario; }
-
-   cambiarPassword() {
-      console.log('cambiando...');
+   get getDatosUsuario(): Usuario { 
+      return {...this.authService.getDatosUsuario} 
    }
 
    modalEditarUserNameVisible() {
@@ -38,6 +34,15 @@ export class CuentaComponent {
    ocultarModalUserNameCancelado(valor: boolean) {
       if (!valor) {
          this.mostrarModalUserName = valor;
+      }
+   }
+
+   modalEditarPasswordVisible(){
+      this.mostrarModalPassword = true;
+   }
+   ocultarModalPasswordCancelado(valor: boolean) {
+      if (!valor) {
+         this.mostrarModalPassword = valor;
       }
    }
 

@@ -6,13 +6,6 @@
    (ocultarModalCreadoOkOutput)="ocultarModalCrear($event)">
 </app-crear-usuario>
 
-<app-editar-usuario
-   [usuarioInput]="form.get('usuario')?.value"
-   [mostrarModalInput]="modalEditarVisible"
-   (ocultarModalCanceladoOutput)="ocultarModalEditarCancelado($event)"
-   (ocultarModalEditadoOkOutput)="ocultarModalEditar($event)">
-</app-editar-usuario>
-
 <!-- Confirm -->
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
 
@@ -68,9 +61,6 @@
            </p-dropdown>
          </td>
          <td>
-            <p-splitButton label="boton" [model]="items"></p-splitButton>
-            <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded"
-                     (click)="mostrarModalEditar(usuario)"></button>
             <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger ml-1"
                      (click)="confirmarEliminar(usuario.id)"></button>
          </td>

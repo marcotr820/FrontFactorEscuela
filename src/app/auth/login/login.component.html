@@ -35,7 +35,8 @@
 
       </div>
 
-      <button class="block w-full mb-2 c-verde" type="submit" pButton label="Iniciar Sesion"></button>
+      <button class="block w-full mb-2 c-verde" [disabled]="!loginForm.valid"type="submit"
+              [ngClass]="{'bloqueo': !loginForm.valid}" pButton label="Iniciar Sesion"></button>
       <div class="flex justify-content-center align-items-center">
         <span>No tienes una  cuenta?,</span>
         <p-button class="inline m-0" routerLink="/registro" label="Registrate" styleClass="p-button-link"

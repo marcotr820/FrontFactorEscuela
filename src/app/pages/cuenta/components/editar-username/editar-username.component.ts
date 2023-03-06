@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { AuthService } from '../../../../auth/services/auth.service';
 import { Usuario } from '../../../usuario/classes/usuario';
 import { FormGroup, FormBuilder, Validators, AsyncValidator } from '@angular/forms';
@@ -11,13 +11,13 @@ import { Router } from '@angular/router';
    templateUrl: './editar-username.component.html',
    styleUrls: ['./editar-username.component.css']
 })
-export class EditarUsernameComponent {
+export class EditarUsernameComponent implements OnInit {
 
-   erroMsj:boolean = false;
+   errorMsj:boolean = false;
    exitoMsj: boolean = false;
    modalVisible: boolean = false;
    formEditarUserName: FormGroup = this.fb.group({
-      id:[ this.authService.getDatosUsuario.id ,[]],
+      id:'',
       userName: ['', {
          validators:[Validators.required, Validators.minLength(5)],
          asyncValidators: [this.emailValidator.validarUserName(this.http)]
@@ -31,8 +31,21 @@ export class EditarUsernameComponent {
       this.usuario = this.authService.getDatosUsuario;
    }
 
+   ngOnInit(): void {
+      this.ocultarMensajeError();
+   }
+
+   ocultarMensajeError(): void{
+      this.formEditarUserName.valueChanges.subscribe( (val) => {
+         if(this.errorMsj){
+            this.errorMsj = false;
+         }
+      })
+   }
+
    @Input() set mostrarModalInput(mostrarModal: boolean) {
       if (mostrarModal) {
+         this.formEditarUserName.get('id')?.setValue(this.authService.getDatosUsuario.id);
          this.modalVisible = mostrarModal;
       }
    }
@@ -62,13 +75,14 @@ export class EditarUsernameComponent {
       let usuario = this.formEditarUserName.value;
       this.authService.editarUserName(usuario).subscribe({
          next: ((resp) => {
+            localStorage.removeItem('token');
             this.exitoMsj = true;
             setTimeout(() => {
               this.router.navigateByUrl('/login');
             }, 2500);
          }),
          error: ((err) => {
-            this.erroMsj = true;
+            this.errorMsj = true;
          })
       });
    }
@@ -79,6 +93,7 @@ export class EditarUsernameComponent {
    cancelarModal(){
       this.modalVisible = false;
       this.ocultarModalCanceladoOutput.emit(this.modalVisible);
+      this.formEditarUserName.reset();
    }
 
    campoEsValido(campo: string){

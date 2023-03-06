@@ -40,6 +40,8 @@ export class RecuperarCuentaComponent {
     let email = this.form.get('email')?.value; 
     this.authService.enviarEmailRestablecerPassword(email).subscribe({
       next: (resp) => {
+        console.log(resp);
+        
         this.envioEmailCorrecto = true;
       },
       error: (err) => console.log(err)

@@ -30,7 +30,7 @@ export class UsuarioService {
 
   crearUsuarioAutorizadoService(usuario: RegistroAutorizado){
     let body = usuario;
-    return this.http.post<Respuesta<DataResult>>(`${this.baseUrl}/cuentas/RegistroAutorizado`, body, this.headers);
+    return this.http.post<Respuesta<DataResult>>(`${this.baseUrl}/cuentas/CrearUsuarioAutorizado`, body, this.headers);
   }
 
   editarUsuarioAutorizadoService(usuario: any){

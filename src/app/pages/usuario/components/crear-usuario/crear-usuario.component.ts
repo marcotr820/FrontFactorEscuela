@@ -94,12 +94,14 @@ export class CrearUsuarioComponent {
       this.modalVisible = false;
       if (!this.modalVisible) {
          this.ocultarModalCreadoOkOutput.emit(this.modalVisible);
+         this.formRegistroAutorizado.reset();
       }
    }
 
    ocultarModalCancelado(){
       this.modalVisible = false;
       this.ocultarModalCanceladoOutput.emit(this.modalVisible);
+      this.formRegistroAutorizado.reset();
    }
 
    recibirRol(rol: Rol){

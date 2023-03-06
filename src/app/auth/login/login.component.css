@@ -30,3 +30,9 @@
    height: 50px;
    width: 200px !important;
 }
+
+/* boton bloqueado */
+.bloqueo:disabled {
+   /* pointer-events: none; */
+   cursor: not-allowed;
+}

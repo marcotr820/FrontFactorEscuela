@@ -15,8 +15,8 @@ import { Usuario } from 'src/app/pages/usuario/classes/usuario';
 export class AuthService {
    
    public _tokenDatos!: TokenModelo;
-   private usuario = new Usuario();
-   private baseUrl: string = environment.baseUrl;
+   private _usuario = new Usuario();
+   private _baseUrl: string = environment.baseUrl;
    private _isLoggedIn = new BehaviorSubject<boolean>(false);
 
    constructor(private http: HttpClient) {
@@ -33,7 +33,9 @@ export class AuthService {
       return localStorage.getItem('token') || ''; //si no existe el token toma valor '';
    }
 
-   get getDatosUsuario(){ return this.usuario; }
+   get getDatosUsuario(): Usuario{ 
+      return {...this._usuario}; //rompemos la relacion con los datos para no que puedan ser afectados
+   } 
 
    private getTokenDatos(tokenRecibido: string) {
       if (!!tokenRecibido) {
@@ -43,7 +45,7 @@ export class AuthService {
    }
 
    loginService(loginUsuario: LoginUsuario) {
-      return this.http.post<Respuesta<DataResult>>(`${this.baseUrl}/cuentas/login`, loginUsuario)
+      return this.http.post<Respuesta<DataResult>>(`${this._baseUrl}/cuentas/login`, loginUsuario)
          .pipe(
             tap((resp: Respuesta<DataResult>) => {
                if (!!resp.dataResult.token) {
@@ -54,7 +56,7 @@ export class AuthService {
    }
 
    crearUsuarioNormalService(registroNormal: RegistroNormal) {
-      return this.http.post<Respuesta<DataResult>>(`${this.baseUrl}/cuentas/CrearUsuarioNormal`, registroNormal)
+      return this.http.post<Respuesta<DataResult>>(`${this._baseUrl}/cuentas/CrearUsuarioNormal`, registroNormal)
          .pipe(
             tap((resp: Respuesta<DataResult>) => {
                //solo se entrara al map cuando la respuesta no tengo error
@@ -73,13 +75,13 @@ export class AuthService {
       //     "Authorization": `Bearer ${token}`  //enviamos el valor del token
       //   }
       // }
-      return this.http.get<Respuesta<DataResult>>(`${this.baseUrl}/cuentas/renovarToken`).pipe(
+      return this.http.get<Respuesta<DataResult>>(`${this._baseUrl}/cuentas/renovarToken`).pipe(
          tap((resp: Respuesta<DataResult>) => {   //tap realiza operaciones con la respuesta
             localStorage.setItem("token", resp.dataResult.token);
             this._isLoggedIn.next(true);
             this._tokenDatos = this.getTokenDatos(resp.dataResult.token);
             const { id, userName, email, isBlocked } = resp.dataResult.usuario;
-            this.usuario = new Usuario(id, userName, email, isBlocked);
+            this._usuario = new Usuario(id, userName, email, isBlocked);
          }),
          map((resp) => {  //solo se ejecuta el map si es una respuesta exitosa
             return true;
@@ -95,18 +97,23 @@ export class AuthService {
    enviarEmailRestablecerPassword(email: string) {
       console.log(email, 'asd');
       const params = new HttpParams().set('email', email);
-      return this.http.get(`${this.baseUrl}/cuentas/EnviarEmailRestablecerPassword`, { params });
+      return this.http.get(`${this._baseUrl}/cuentas/EnviarEmailRestablecerPassword`, { params });
    }
 
    restablecerPassword(passwords: any, reset_token: string, email: string) {
       const body = passwords;
       const params = new HttpParams().set('reset_token', reset_token).set('email', email);
-      return this.http.post(`${this.baseUrl}/cuentas/RestablecerPassword`, body, { params });
+      return this.http.post(`${this._baseUrl}/cuentas/RestablecerPassword`, body, { params });
    }
 
    editarUserName(usuario: any){
       const body = usuario;
-      return this.http.post<boolean>(`${this.baseUrl}/cuentas/EditarUsername`, body);
+      return this.http.post<boolean>(`${this._baseUrl}/cuentas/EditarUsername`, body);
+   }
+
+   editarPassword(passwords: any){
+      const body = passwords;
+      return this.http.put(`${this._baseUrl}/cuentas/EditarPassword`, body);
    }
 
 }

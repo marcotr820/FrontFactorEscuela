@@ -29,18 +29,6 @@ export class UsuarioComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.items = [
-      {label: 'Update', command: () => {
-          // this.update();
-      }},
-      {label: 'Delete', command: () => {
-          // this.delete();
-      }},
-      {label: 'Angular.io', url: 'http://angular.io'},
-      {separator: true},
-      {label: 'Setup', routerLink: ['/setup']}
-    ];
-
     this.statuses = [
       {label: 'Habilitado', value: false},
       {label: 'Bloqueado', value: true},
@@ -77,19 +65,6 @@ export class UsuarioComponent implements OnInit {
         this.GetAll();
       }
     })
-  }
-
-  mostrarModalEditar(usuario: Usuario){
-    //{...usuario} toma una copia del valor y no el valor en si
-    this.form.get('usuario')?.setValue({...usuario});
-    this.modalEditarVisible = true;
-  }
-  ocultarModalEditar(valor: boolean){
-    this.GetAll();
-    this.modalEditarVisible = valor 
-  }
-  ocultarModalEditarCancelado(valor: boolean){
-    this.modalEditarVisible = valor 
   }
 
   confirmarEliminar(id: string){
