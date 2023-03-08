@@ -1,11 +1,15 @@
 <div class="content">
    <form [formGroup]="registroForm" (ngSubmit)="crearUsuarioNormal()">
-      <p-card header="Crea una cuenta" [style]="{width: '450px'}"
-         styleClass="shadow-2 m-0">
+      <p-card [style]="{width: '450px'}" styleClass="m-0">
 
          <ng-template pTemplate="header">
             <img alt="Card" src="../../../assets/images/vidaSalud-logo.png">
          </ng-template>
+
+         <div class="text-center mb-2">
+            <p class="titulo">Registro</p>
+            <p class="subtitulo">Crea una nueva cuenta</p>
+         </div>
 
          <div class="field">
             <label for="">Usuario</label>

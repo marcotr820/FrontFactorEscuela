@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, ViewEncapsulation } from '@angular/core';
 import { RolService } from '../../services/rol.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Rol } from '../../classes/rol';
@@ -6,7 +6,8 @@ import { Rol } from '../../classes/rol';
 @Component({
   selector: 'app-select-rol',
   templateUrl: './select-rol.component.html',
-  styleUrls: ['./select-rol.component.css']
+  styleUrls: ['./select-rol.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class SelectRolComponent implements OnInit {
 

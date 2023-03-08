@@ -32,10 +32,9 @@
       <p-card>
          <div class="field grid">
             <label class="col-fixed font-semibold m-0" style="width:200px">Nombre de usuario</label>
-            <div class="col flex align-items-center">
+            <div class="col flex align-items-center gap-2">
                <label class="col-fixed">{{ getDatosUsuario.userName }}</label>
-               <button pButton pRipple type="button" icon="pi pi-pencil"
-                        class="p-button-raised p-button-text p-button-plain" (click)="modalEditarUserNameVisible()"></button>
+               <i class="pi pi-pencil cursor-pointer" (click)="modalEditarUserNameVisible()"></i>
             </div>
          </div>
       </p-card>

@@ -8,44 +8,44 @@ import { RegistroAutorizado } from '../classes/registroAutorizado';
 import { DataResult } from '../../../shared/classes/dataResult';
 
 @Injectable({
-  providedIn: 'root'
+   providedIn: 'root'
 })
 export class UsuarioService {
-  private baseUrl:string = environment.baseUrl;
-  constructor(private http: HttpClient) { }
+   private baseUrl: string = environment.baseUrl;
+   constructor(private http: HttpClient) { }
 
-  GetAllService(): Observable<Respuesta<Usuario[]>>{
-    return this.http.get<Respuesta<Usuario[]>>(`${this.baseUrl}/cuentas/GetUsuarios`);
-  }
+   GetAllService(): Observable<Respuesta<Usuario[]>> {
+      return this.http.get<Respuesta<Usuario[]>>(`${this.baseUrl}/cuentas/GetUsuarios`);
+   }
 
-  get token(){
-    return localStorage.getItem("token") || '';
-  }
-  
-  get headers() {
-    return {
-      headers: { "Authorization": `Bearer ${this.token}` }
-    }
-  }
+   get token() {
+      return localStorage.getItem("token") || '';
+   }
 
-  crearUsuarioAutorizadoService(usuario: RegistroAutorizado){
-    let body = usuario;
-    return this.http.post<Respuesta<DataResult>>(`${this.baseUrl}/cuentas/CrearUsuarioAutorizado`, body, this.headers);
-  }
+   get headers() {
+      return {
+         headers: { "Authorization": `Bearer ${this.token}` }
+      }
+   }
 
-  editarUsuarioAutorizadoService(usuario: any){
-    let body = usuario;
-    return this.http.put(`${this.baseUrl}/cuentas/EditarUsuarioAutorizado`, body, this.headers);
-  }
+   crearUsuarioAutorizadoService(usuario: RegistroAutorizado) {
+      let body = usuario;
+      return this.http.post<Respuesta<DataResult>>(`${this.baseUrl}/cuentas/CrearUsuarioAutorizado`, body, this.headers);
+   }
 
-  bloquearDesbloquearUsuarioService(usuarioId: string){
-    const url = `${this.baseUrl}/cuentas/bloquearDesbloquearUsuario/${usuarioId}`;
-    return this.http.put(url, {});
-  }
+   editarUsuarioAutorizadoService(usuario: any) {
+      let body = usuario;
+      return this.http.put(`${this.baseUrl}/cuentas/EditarUsuarioAutorizado`, body, this.headers);
+   }
 
-  eliminarService(id: string){
-    const url = `${this.baseUrl}/cuentas/EliminarUsuario`;
-    const params = new HttpParams().set('id', id);
-    return this.http.delete(url, {params});
-  }
+   bloquearDesbloquearUsuarioService(usuarioId: string) {
+      const url = `${this.baseUrl}/cuentas/bloquearDesbloquearUsuario/${usuarioId}`;
+      return this.http.put(url, {});
+   }
+
+   eliminarService(id: string) {
+      const url = `${this.baseUrl}/cuentas/EliminarUsuario`;
+      const params = new HttpParams().set('id', id);
+      return this.http.delete(url, { params });
+   }
 }

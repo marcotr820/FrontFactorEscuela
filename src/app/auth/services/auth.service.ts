@@ -108,7 +108,7 @@ export class AuthService {
 
    editarUserName(usuario: any){
       const body = usuario;
-      return this.http.post<boolean>(`${this._baseUrl}/cuentas/EditarUsername`, body);
+      return this.http.put<boolean>(`${this._baseUrl}/cuentas/EditarUsername`, body);
    }
 
    editarPassword(passwords: any){

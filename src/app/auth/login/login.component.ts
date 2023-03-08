@@ -5,7 +5,6 @@ import { AuthService } from '../services/auth.service';
 import { LoginUsuario } from '../classes/loginUsuario';
 import { MessageService } from 'primeng/api';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Usuario } from '../../pages/usuario/classes/usuario';
 
 @Component({
    selector: 'app-login',
@@ -17,7 +16,7 @@ import { Usuario } from '../../pages/usuario/classes/usuario';
 export class LoginComponent implements OnInit {
 
    modalBloqueoVisible: boolean = false;
-   mensajeErrorVisible: boolean = false;
+   mensajeAlertaErrorVisible: boolean = false;
 
    loginForm: FormGroup = this.fb.group({
       userName: ['', [Validators.required, Validators.minLength(5)]],
@@ -29,6 +28,15 @@ export class LoginComponent implements OnInit {
    constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) { }
 
    ngOnInit(): void {
+      this.ocultarAlertaMensajeError();
+   }
+
+   ocultarAlertaMensajeError(): void{
+      this.loginForm.valueChanges.subscribe( (val) => {
+         if(this.mensajeAlertaErrorVisible){
+            this.mensajeAlertaErrorVisible = false;
+         }
+      });
    }
 
    ocultarModalBloqueo(valor: boolean) {
@@ -56,7 +64,7 @@ export class LoginComponent implements OnInit {
             }
          },
          error: (err: HttpErrorResponse) => {
-            this.mensajeErrorVisible = true;
+            this.mensajeAlertaErrorVisible = true;
          }
       });
    }

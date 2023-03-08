@@ -51,7 +51,7 @@
          <td>{{usuario.rol}}</td>
          <td>
             <p-dropdown [options]="statuses" placeholder="Seleccione" optionValue="value" [(ngModel)]="usuario.isBlocked"
-                        (onChange)="cambiarEstadoUsuario(usuario.id)" appendTo="body">
+                        (onChange)="cambiarEstadoUsuario(usuario.id)" appendTo="body" styleClass="input-select">
                <ng-template let-item pTemplate="selectedItem">
                   <span [class]="'product-badge status-' + item.value">{{item.label}}</span>
                </ng-template>
